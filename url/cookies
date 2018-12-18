@@ -1,0 +1,24 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '((".google.co.jp"
+  [url-cookie "HttpOnly" nil "08-Jan-2019 17:40:45.00 GMT" "/search" ".google.co.jp" nil]
+  [url-cookie "CGIC" "IgMqLyo" "08-Jan-2019 17:40:45.00 GMT" "/search" ".google.co.jp" nil]
+  [url-cookie "HttpOnly" nil "08-Jan-2019 17:40:45.00 GMT" "/complete/search" ".google.co.jp" nil]
+  [url-cookie "CGIC" "IgMqLyo" "08-Jan-2019 17:40:45.00 GMT" "/complete/search" ".google.co.jp" nil]
+  [url-cookie "HttpOnly" nil "09-Jan-2019 07:24:18.00 GMT" "/" ".google.co.jp" nil]
+  [url-cookie "NID" "134=33j2VmgkLpcIovHbtYcadMQOTpeaHUHX_PGEe3Q3PPe-map6lV1g_S9ocW-_OvZ-hi8sEl6lH5kqidyztJJlX0xQjaFyHC33UiBWBib4WNO1pDxlT3ThGKc3oGQbCbv-" "09-Jan-2019 07:24:18.00 GMT" "/" ".google.co.jp" nil]
+  [url-cookie "1P_JAR" "2018-09-26-04" "Fri, 26-Oct-2018 04:50:21 GMT" "/" ".google.co.jp" nil])
+ (".google.com"
+  [url-cookie "HttpOnly" nil "09-Jan-2019 02:47:02.00 GMT" "/" ".google.com" nil]
+  [url-cookie "NID" "134=VDcnzlUyFP7ImrE5N7sIcsqUULfW2mZG0-Vzv0Dj4KaN4sS_3jpgdON57WgeESDdIAncGvbyfWgtRZvKez_AZ3IYJ_bwXYr3Rl3fwRZoeuTxfWD_g9UwUBudqMTH3Ox4" "09-Jan-2019 02:47:02.00 GMT" "/" ".google.com" nil]
+  [url-cookie "1P_JAR" "2018-09-26-04" "Fri, 26-Oct-2018 04:50:46 GMT" "/" ".google.com" nil]))
+)
+(setq url-cookie-secure-storage
+ 'nil)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:
