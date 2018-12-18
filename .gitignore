@@ -52,6 +52,9 @@ flycheck_*.el
 
 ### custom settings
 
-recentf
-semanticdb/
-undohist/
+/bookmarks
+/games/
+/projectile-bookmarks.eld
+/recentf
+/semanticdb/
+/undohist/
