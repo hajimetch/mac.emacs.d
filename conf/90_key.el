@@ -19,15 +19,15 @@
 (bind-key "M-x"            'helm-M-x)
 (bind-key "C-x C-x"        'helm-mini)
 (bind-key "C-x C-f"        'helm-find-files)
-(bind-key "C-c g"          'helm-rg)
-(bind-key "C-c y"          'helm-yas-complete)
-(bind-key "C-c i"          'helm-semantic-or-imenu)
 (bind-key "C-c b"          'helm-resume)
+(bind-key "C-c g"          'helm-rg)
+(bind-key "C-c i"          'helm-semantic-or-imenu)
+(bind-key "C-c m"          'helm-man-woman)
+(bind-key "C-c y"          'helm-yas-complete)
 (bind-key "C-c C-SPC"      'helm-all-mark-rings)
 (bind-key "C-S-y"          'helm-show-kill-ring)
-(bind-key "<M-f1>"         'helm-apropos)
 (bind-key "C-c <f1>"       'helm-info)
-(bind-key "C-c m"          'helm-man-woman)
+(bind-key "<M-f1>"         'helm-apropos)
 (bind-keys :map helm-map
            ("TAB" .        helm-execute-persistent-action)
            ("C-z" .        helm-select-action)
@@ -40,10 +40,10 @@
 
 
 ;;; org-mode
-(bind-key "C-c l"          'org-store-link)
-(bind-key "C-c c"          'org-capture)
 (bind-key "C-c a"          'org-agenda)
+(bind-key "C-c c"          'org-capture)
 (bind-key "C-c o"          'org-switchb)
+(bind-key "C-c l"          'org-store-link)
 (bind-key "C-c ("          'org-clock-in)
 (bind-key "C-c )"          'org-clock-out)
 
@@ -52,17 +52,17 @@
 (bind-key "C-c q"          'quickrun)
 (bind-keys :map python-mode-map
            ("TAB" .        company-complete)
-           ("C-c C-r" .    helm-jedi-related-names)
-           ("C-c C-p" .    flycheck-previous-error)
-           ("C-c C-n" .    flycheck-next-error)
            ("C-c C-d" .    flycheck-list-errors)
-           ("C-c C-f" .    py-yapf-buffer))
+           ("C-c C-f" .    py-yapf-buffer)
+           ("C-c C-n" .    flycheck-next-error)
+           ("C-c C-p" .    flycheck-previous-error)
+           ("C-c C-r" .    helm-jedi-related-names))
 
 
 ;;; multiple-cursor
-(bind-key "C-c e"          'mc/edit-lines)
 (bind-key "C->"            'mc/mark-next-like-this)
 (bind-key "C-<"            'mc/mark-previous-like-this)
+(bind-key "C-c e"          'mc/edit-lines)
 (bind-key "C-c h"          'mc/mark-all-like-this)
 
 
@@ -74,27 +74,25 @@
 ;;; isearch
 (bind-keys :map isearch-mode-map
            ("C-d" .        isearch-delete-char)
-           ("C-y" .        isearch-yank-kill)
            ("C-e" .        isearch-edit-string)
+           ("C-y" .        isearch-yank-kill)
            ("TAB" .        isearch-yank-word)
-           ("C-g" .        (lambda() (interactive) (isearch-done)))
-           ("<compend>" .  (lambda() (interactive) (isearch-update)))
-           ("<kanji>".     isearch-toggle-input-method))
+           ("C-g" .        (lambda() (interactive) (isearch-done))))
 
 
 ;;; helm-swoop
 (bind-key "M-s"            'helm-swoop)
 (bind-keys :map helm-swoop-map
-           ("C-r" .        helm-previous-line)
-           ("C-s" .        helm-next-line))
+           ("C-s" .        helm-next-line)
+           ("C-r" .        helm-previous-line))
 
 
 ;;; Company
 (bind-key "TAB"            'company-complete)
 (bind-keys :map company-active-map
+           ("C-d" .        company-filter-candidates)
            ("C-n" .        company-select-next)
-           ("C-p" .        company-select-previous)
-           ("C-d" .        company-filter-candidates))
+           ("C-p" .        company-select-previous))
 (bind-keys :map company-search-map
            ("C-n" .        company-select-next)
            ("C-p" .        company-select-previous))
@@ -130,19 +128,19 @@
 
 ;;; Other key bindings
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))    ; C-hでバックスペース
+(bind-key "C-m"            'newline-and-indent)             ; 改行時自動インデント
 (bind-key "C-x g"          'magit-status)                   ; magitステータス
 (bind-key "C-x k"          'kill-this-buffer)               ; バッファを閉じる
 (bind-key "M-k"            'kill-this-buffer)               ; バッファを閉じる
 (bind-key "C-c d"          'dictionary)                     ; 辞書参照
-(bind-key "C-c r"          'revert-buffer-no-confirm)       ; バッファ更新
 (bind-key "C-c j"          'open-junk-file)                 ; junk-file作成
+(bind-key "C-c p"          'ps-print-region)                ; PDF作成
+(bind-key "C-c r"          'revert-buffer-no-confirm)       ; バッファ更新
+(bind-key "C-c s"          'whitespace-cleanup)             ; 不要な空白を削除
+(bind-key "C-c ;"          'comment-dwim)                   ; コメントアウト
+(bind-key "C-c C-,"        'howm-menu)                      ; howmメニュー
+(bind-key "C-c <C-return>" 'toggle-truncate-lines)          ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)                  ; 範囲インデント
 (bind-key "<backtab>"      '(lambda() (interactive) (insert "	")))
                                                             ; インデント
-(bind-key "C-c ;"          'comment-dwim)                   ; コメントアウト
-(bind-key "C-c s"          'whitespace-cleanup)             ; 不要な空白を削除
-(bind-key "C-c p"          'ps-print-region)                ; PDF作成
-(bind-key "C-c C-,"        'howm-menu)                      ; howmメニュー
-(bind-key "C-c <C-return>" 'toggle-truncate-lines)          ; 右端で折り返す
 (bind-key "<f1>"           'help-for-help)                  ; ヘルプ参照
-(bind-key "C-m"            'newline-and-indent)             ; 改行時自動インデント
