@@ -120,6 +120,8 @@
 
 
 ;;; Company
+(require 'company)
+(require 'company-quickhelp)
 (global-company-mode t)
 (company-quickhelp-mode t)
 
@@ -278,3 +280,6 @@
 
 ;; ad-handle-definition 対応
 (setq ad-redefinition-action 'accept)
+
+;; 読み取り専用モードで開く
+(add-hook 'find-file-hooks 'view-mode)
