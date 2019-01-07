@@ -204,7 +204,6 @@
 ;;; カーソル・ハイライト
 ;; カーソル行をハイライト
 (require 'hl-line)
-(global-hl-line-mode t)
 
 ;; ハイライトを無効にするメジャーモードを指定
 (defvar global-hl-line-timer-exclude-modes '(todotxt-mode))
