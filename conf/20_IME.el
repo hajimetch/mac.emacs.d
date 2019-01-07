@@ -16,10 +16,10 @@
 ;; ノーマルステート時に状態遷移した時に、skkが起動している場合、自動的にアスキーモードにする
 (when (locate-library "skk")
   (require 'skk)
-  (defun my-skk-control ()
+  (defun my/skk-control ()
     (when skk-mode
       (skk-latin-mode)))
-  (add-hook 'evil-normal-state-entry-hook 'my-skk-control))
+  (add-hook 'evil-normal-state-entry-hook 'my/skk-control))
 
 ;; アスキーモードのカーソルの色
 (setq skk-cursor-latin-color "#5BFBD0")
@@ -83,7 +83,7 @@
 
 
 ;;; かな変換トグル
-(defun skk-j-mode-set-henkan ()
+(defun my/skk-set-henkan ()
   (interactive)
   (skk-mode)
   (skk-j-mode-on)

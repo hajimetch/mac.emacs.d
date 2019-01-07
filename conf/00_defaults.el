@@ -17,26 +17,26 @@
 ;;; 文字コード
 (set-language-environment "Japanese")
 
-;; デフォルトの文字コード
-(set-default-coding-systems 'utf-8-unix)
-
 ;; テキストファイル／新規バッファの文字コード
 (prefer-coding-system 'utf-8-unix)
-
-;; Mac のファイル名正規化などを扱えるようにする
-(require 'ucs-normalize)
 
 ;; ファイル名の文字コード
 (set-file-name-coding-system 'utf-8-hfs)
 
-;; システムメッセージの文字コード
-(setq locale-coding-system 'utf-8-hfs)
-
 ;; キーボード入力の文字コード
 (set-keyboard-coding-system 'utf-8-unix)
 
+;; システムメッセージの文字コード
+(setq locale-coding-system 'utf-8-hfs)
+
 ;; サブプロセスのデフォルト文字コード
 (setq default-process-coding-system '(undecided-dos . utf-8-unix))
+
+;; デフォルトの文字コード
+(set-default-coding-systems 'utf-8-unix)
+
+;; Mac のファイル名正規化などを扱えるようにする
+(require 'ucs-normalize)
 
 ;; 環境依存文字 文字化け対応
 (set-charset-priority 'ascii 'japanese-jisx0208 'latin-jisx0201
@@ -169,7 +169,7 @@
 
 
 ;;; バッファ再読み込み関数
-(defun revert-buffer-no-confirm ()
+(defun my/revert-buffer ()
     "Revert buffer without confirmation."
     (interactive) (revert-buffer t t))
 
@@ -223,7 +223,7 @@
 
 
 ;;; Mac 標準辞書アプリと連携
-(defun dictionary ()
+(defun my/dictionary ()
   "dictionary.app"
   (interactive)
   (let ((editable (not buffer-read-only))

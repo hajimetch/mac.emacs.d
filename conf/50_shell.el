@@ -1,5 +1,5 @@
 ;;; shell の存在を確認
-(defun skt:shell ()
+(defun my/check-shell ()
   (or (executable-find "zsh")
       (executable-find "bash")
       (executable-find "cmdproxy")
@@ -7,7 +7,7 @@
 
 
 ;;; shell 名
-(setq shell-file-name (skt:shell))
+(setq shell-file-name (my/check-shell))
 (setenv "SHELL" shell-file-name)
 (setq explicit-shell-file-name shell-file-name)
 
@@ -26,7 +26,7 @@
 (setq multi-term-program shell-file-name)
 
 ;; multi-term-toggle
-(defun multi-term-toggle ()
+(defun my/multi-term-toggle ()
   (interactive)
   (progn (multi-term-dedicated-toggle)
          (if (multi-term-dedicated-exist-p) (multi-term-dedicated-select))))

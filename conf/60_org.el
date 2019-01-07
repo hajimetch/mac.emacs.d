@@ -62,12 +62,12 @@
 
 ;;; org-clock
 ;; Emacs 終了時に org-clock-out
-(defun my:org-clock-out-and-save-when-exit ()
+(defun my/org-clock-out-and-save ()
   "Save buffers and stop clocking when kill emacs."
   (when (org-clock-is-active)
     (org-clock-out)
     (save-some-buffers t)))
-(add-hook 'kill-emacs-hook #'my:org-clock-out-and-save-when-exit)
+(add-hook 'kill-emacs-hook #'my/org-clock-out-and-save)
 
 ;; 1分未満を記録しない
 (setq org-clock-out-remove-zero-time-clocks t)

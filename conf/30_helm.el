@@ -68,15 +68,9 @@
 (setq projectile-git-command "fd . -0")
 (setq projectile-generic-command "fd . -0")
 
-;; 日本語ファイル名を表示
-(defun projectile-files-via-ext-command-advice (f &rest args)
-  (let ((coding-system-for-read 'utf-8))
-    (apply f args)))
-(advice-add 'projectile-files-via-ext-command :around 'projectile-files-via-ext-command-advice)
-
 
 ;;; helm-find-file から browse-project を呼び出す
-(defun helm-ff-run-browse-project-with-prefix-arg ()
+(defun my/helm-ff-run-browse-project ()
   (interactive)
   (setq current-prefix-arg '(4))
   (call-interactively 'helm-ff-run-browse-project))
