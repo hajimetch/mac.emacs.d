@@ -17,6 +17,9 @@
 ;;; 文字コード
 (set-language-environment "Japanese")
 
+;; デフォルトの文字コード
+(set-default-coding-systems 'utf-8-unix)
+
 ;; テキストファイル／新規バッファの文字コード
 (prefer-coding-system 'utf-8-unix)
 
@@ -28,12 +31,6 @@
 
 ;; システムメッセージの文字コード
 (setq locale-coding-system 'utf-8-hfs)
-
-;; サブプロセスのデフォルト文字コード
-(setq default-process-coding-system '(undecided-dos . utf-8-unix))
-
-;; デフォルトの文字コード
-(set-default-coding-systems 'utf-8-unix)
 
 ;; Mac のファイル名正規化などを扱えるようにする
 (require 'ucs-normalize)
