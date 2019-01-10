@@ -76,6 +76,6 @@
  '(shell-pop-shell-type (quote ("eshell" "*eshell*"
                                 (lambda nil (eshell shell-pop-term-shell)))))
  '(shell-pop-universal-key "C-c t")
- '(shell-pop-window-height 30)
+ '(shell-pop-window-height 50)
  '(shell-pop-full-span t)
  '(shell-pop-window-position "bottom"))
