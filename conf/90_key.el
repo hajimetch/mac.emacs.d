@@ -31,7 +31,8 @@
 (bind-keys :map helm-map
            ("TAB" .        helm-execute-persistent-action)
            ("C-z" .        helm-select-action)
-           ("M-b" .        my/helm-ff-run-browse-project))
+           ("M-b" .        my/helm-ff-run-browse-project)
+           ("<f1>" .       helm-help))
 
 
 ;;; Projectile
