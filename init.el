@@ -12,15 +12,9 @@
 
 (unless (eq (server-running-p) 't)
   (server-start)
-
-  ;; do not exit when C-x C-c
-  (global-set-key (kbd "C-x C-c") 'server-edit)
-
-  ;; exit by M-x exit
-  (defalias 'exit 'save-buffers-kill-emacs)
-
-  ;; yes-or-no when exit
-  (setq confirm-kill-emacs 'yes-or-no-p)
+  (global-set-key (kbd "C-x C-c") 'server-edit) ; do not exit when C-x C-c
+  (defalias 'exit 'save-buffers-kill-emacs)     ; exit by M-x exit
+  (setq confirm-kill-emacs 'yes-or-no-p)        ; yes-or-no when exit
   )
 
 

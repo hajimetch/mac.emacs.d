@@ -25,7 +25,7 @@
  '(shell-pop-term-shell "/usr/bin/zsh")
  '(shell-pop-universal-key "C-c t")
  '(shell-pop-window-position "bottom")
- '(shell-pop-window-size 30))
+ '(shell-pop-window-size 50))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

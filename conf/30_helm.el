@@ -32,8 +32,8 @@
 ;;; helm-c-yasnippet
 (require 'yasnippet)
 (setq yas-snippet-dirs
-      '("~/Dropbox/Emacs/snippets/mysnippets"  ;; 自作スニペット
-        "~/Dropbox/Emacs/snippets/yasnippets"  ;; デフォルトスニペット
+      '("~/Dropbox/Emacs/snippets/mysnippets" ; 自作スニペット
+        "~/Dropbox/Emacs/snippets/yasnippets" ; デフォルトスニペット
         ))
 (require 'helm-c-yasnippet)
 (setq helm-yas-space-match-any-greedy t)

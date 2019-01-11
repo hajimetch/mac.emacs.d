@@ -7,13 +7,13 @@
 (when window-system
   (progn
     (setq default-frame-alist
-      (append '((line-spacing         . 0  )      ; 文字間隔
-                (left-fringe          . 10 )      ; 左フリンジ幅
-                (right-fringe         . 12 )      ; 右フリンジ幅
-                (menu-bar-lines       . 1  )      ; メニューバー
-                (tool-bar-lines       . nil)      ; ツールバー
-                (vertical-scroll-bars . nil)      ; スクロールバー
-                (alpha                . 95 )      ; 透明度
+      (append '((line-spacing         . 0  ) ; 文字間隔
+                (left-fringe          . 10 ) ; 左フリンジ幅
+                (right-fringe         . 12 ) ; 右フリンジ幅
+                (menu-bar-lines       . 1  ) ; メニューバー
+                (tool-bar-lines       . nil) ; ツールバー
+                (vertical-scroll-bars . nil) ; スクロールバー
+                (alpha                . 95 ) ; 透明度
                 ) default-frame-alist))))
 (setq initial-frame-alist default-frame-alist)
 
@@ -28,7 +28,7 @@
 (setq linum-format "%5d")
 
 ;; バッファ中の行番号表示
-(global-linum-mode t)
+(global-linum-mode 0)                 ; 表示しない(パフォーマンス対策)
 
 ;; 行番号の表示を軽くする
 (setq linum-delay t)
@@ -43,13 +43,13 @@
 (require 'whitespace)
 
 ;; 空白を視覚化
-(setq whitespace-style '(face       ; faceで可視化
-                         tabs       ; タブ
-                         trailing   ; 行末
-                         spaces     ; スペース
-                         empty      ; 先頭/末尾の空行
-                         space-mark ; 表示のマッピング(space)
-                         tab-mark   ; 表示のマッピング(tab)
+(setq whitespace-style '(face           ; faceで可視化
+                         tabs           ; タブ
+                         trailing       ; 行末
+                         spaces         ; スペース
+                         empty          ; 先頭/末尾の空行
+                         space-mark     ; 表示のマッピング(space)
+                         tab-mark       ; 表示のマッピング(tab)
                          ))
 
 ;; 全角のスペースとタブを目立たせる

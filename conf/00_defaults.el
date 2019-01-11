@@ -130,16 +130,16 @@
 
 ;;; 自動保存
 (require 'real-auto-save)
-(setq real-auto-save-interval 10)  ; 自動保存間隔
+(setq real-auto-save-interval 10)       ; 自動保存間隔
 (add-hook 'find-file-hook 'real-auto-save-mode)
 
 
 ;;; バックアップ(xxx~)
-(setq make-backup-files     t)     ; 自動バックアップの実行有無
-(setq version-control       t)     ; バックアップファイルへの番号付与
-(setq kept-new-versions  2000)     ; 最新バックアップファイルの保持数
-(setq kept-old-versions     1)     ; 最古バックアップファイルの保持数
-(setq delete-old-versions   t)     ; バックアップファイル削除の実行有無
+(setq make-backup-files     t)    ; 自動バックアップの実行有無
+(setq version-control       t)    ; バックアップファイルへの番号付与
+(setq kept-new-versions  2000)    ; 最新バックアップファイルの保持数
+(setq kept-old-versions     1)    ; 最古バックアップファイルの保持数
+(setq delete-old-versions   t)    ; バックアップファイル削除の実行有無
 
 ;; 保存時に毎回バックアップ
 (defun setq-buffer-backed-up-nil (&rest _) (interactive) (setq buffer-backed-up nil))
