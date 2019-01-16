@@ -24,13 +24,13 @@
 (prefer-coding-system 'utf-8-unix)
 
 ;; ファイル名の文字コード
-(set-file-name-coding-system 'utf-8-hfs)
+(set-file-name-coding-system 'utf-8-unix)
 
 ;; キーボード入力の文字コード
 (set-keyboard-coding-system 'utf-8-unix)
 
 ;; システムメッセージの文字コード
-(setq locale-coding-system 'utf-8-hfs)
+(setq locale-coding-system 'utf-8-unix)
 
 ;; Mac のファイル名正規化などを扱えるようにする
 (require 'ucs-normalize)
