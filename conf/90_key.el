@@ -102,9 +102,7 @@
 
 ;;; Web browse
 (bind-key "C-c w"          'helm-google-suggest)
-(bind-key "C-c C-w"        'eww)
-(bind-keys :map eww-mode-map
-           ("w" .          eww-copy-page-url))
+(bind-key "w"              'eww-copy-page-url eww-mode-map)
 
 
 ;;; Font Size
@@ -132,15 +130,13 @@
 (define-key key-translation-map (kbd "C-h") (kbd "DEL")) ; C-hでバックスペース
 (bind-key "C-m"            'newline-and-indent) ; 改行時自動インデント
 (bind-key "C-x g"          'magit-status)       ; magitステータス
-(bind-key "C-x k"          'kill-this-buffer)   ; バッファを閉じる
 (bind-key "M-k"            'kill-this-buffer)   ; バッファを閉じる
 (bind-key "C-c d"          'my/dictionary)      ; 辞書参照
 (bind-key "C-c j"          'open-junk-file)     ; junk-file作成
 (bind-key "C-c p"          'ps-print-region)    ; PDF作成
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
-(bind-key "C-c ;"          'comment-dwim)       ; コメントアウト
-(bind-key "C-c C-,"        'howm-menu)          ; howmメニュー
+(bind-key "C-c ,,"         nil semantic-mode-map) ; howm-menuとの重複を回避
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
 (bind-key "<backtab>"      '(lambda() (interactive) (insert "	")))

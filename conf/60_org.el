@@ -99,13 +99,3 @@
 
 ;;; Archive ファイルを datetree で管理
 (setq org-archive-location "~/Dropbox/Emacs/org/archive.org::datetree/")
-
-
-;;; 色付けにタイムラグを設ける（パフォーマンス対策）
-(setq jit-lock-context-time 5.0)
-(setq jit-lock-defer-time 1.0)
-(setq jit-lock-stealth-time 20.0)
-(setq jit-lock-stealth-verbose nil)
-(setq jit-lock-stealth-nice 0.5)
-(setq jit-lock-stealth-load 300)
-(setq jit-lock-chunk-size 20)
