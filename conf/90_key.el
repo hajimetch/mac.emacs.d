@@ -131,6 +131,7 @@
 (define-key key-translation-map (kbd "C-h") (kbd "DEL")) ; C-hでバックスペース
 (bind-key "C-m"            'newline-and-indent) ; 改行時自動インデント
 (bind-key "C-x g"          'magit-status)       ; magitステータス
+(bind-key "C-x k"          'kill-this-buffer)   ; バッファを閉じる
 (bind-key "M-k"            'kill-this-buffer)   ; バッファを閉じる
 (bind-key "C-c d"          'my/dictionary)      ; 辞書参照
 (bind-key "C-c j"          'open-junk-file)     ; junk-file作成
