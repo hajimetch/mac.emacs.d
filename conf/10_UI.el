@@ -23,20 +23,8 @@
 
 
 ;;; 行番号
-;; 行番号の書式
-(defvar linum-format nil)
-(setq linum-format "%5d")
-
 ;; バッファ中の行番号表示
 (global-linum-mode 0)                 ; 表示しない(パフォーマンス対策)
-
-;; 行番号の表示を軽くする
-(setq linum-delay t)
-(defadvice linum-schedule (around my-linum-schedule () activate)
-  (run-with-idle-timer 0.2 nil #'linum-update-current))
-
-;; 文字サイズ
-(set-face-attribute 'linum nil :height 0.75)
 
 
 ;;; whitespace
@@ -86,53 +74,9 @@
   (set-face-attribute 'tooltip nil :family "Ricty Diminished Discord" :height 155))
 
 
-;;; tabbar
-(require 'tabbar)
-
-;; tabbar 有効化
-(tabbar-mode t)
-
-;; ボタン非表示
-(setq tabbar-use-images nil)
-(dolist (btn '(tabbar-buffer-home-button
-               tabbar-scroll-left-button
-               tabbar-scroll-right-button))
-  (set btn (cons (cons "" nil) (cons "" nil))))
-
-;; buffer-list
-(defun my/tabbar-buffer-list ()
-  (delq nil
-        (mapcar #'(lambda (b)
-                    (cond
-                     ;; Always include the current buffer.
-                     ((eq (current-buffer) b) b)
-                     ((buffer-file-name b) b)
-                     ((char-equal ?\ (aref (buffer-name b) 0)) nil)
-                     ((equal "*scratch*" (buffer-name b)) b)
-                     ((equal "*eww*" (buffer-name b)) b)
-                     ((char-equal ?* (aref (buffer-name b) 0)) nil)
-                     ((buffer-live-p b) b))) (buffer-list))))
-(setq tabbar-buffer-list-function 'my/tabbar-buffer-list)
-
-;; tabbar 外観変更
-(set-face-attribute
- 'tabbar-default nil
- :family (face-attribute 'default :family)
- :background (face-attribute 'mode-line-inactive :background)
- :height 1.0)
-(set-face-attribute
- 'tabbar-unselected nil
- :background (face-attribute 'mode-line-inactive :background)
- :foreground (face-attribute 'mode-line-inactive :foreground)
- :box nil)
-(set-face-attribute
- 'tabbar-selected nil
- :background (face-attribute 'mode-line :background)
- :foreground (face-attribute 'mode-line :foreground)
- :box nil)
-
-(setq tabbar-separator (quote (0.8)))
-(setq tabbar-buffer-groups-function nil)
+;;; ElScreen
+(require 'elscreen)
+(elscreen-start)
 
 
 ;;; rainbow-delimiters
