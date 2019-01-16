@@ -204,6 +204,7 @@
 ;;; undohist
 (require 'undohist)
 (undohist-initialize)
+(setq undohist-ignored-files '("COMMIT_EDITMSG"))
 
 
 ;;; howm
