@@ -102,11 +102,20 @@
 (line-number-mode t)
 (column-number-mode t)
 
+;; リージョン内の行数と文字数をモードラインに表示する
+(defun my/count-lines-and-chars ()
+  (if mark-active
+      (format "(%dlines, %dchars) "
+              (count-lines (region-beginning)(region-end))
+              (- (region-end)(region-beginning)))
+    ""))
+
 ;; モードライン カスタマイズ
 (setq-default
  mode-line-format
  `(
    ""
+   (:eval (my/count-lines-and-chars))
    mode-line-mule-info
    mode-line-modified
    mode-line-frame-identification
