@@ -117,6 +117,7 @@
 
 
 ;;; ElScreen
+(bind-key "C-z h"          'helm-elscreen)
 (if window-system
     (bind-key "C-z"        'iconify-or-deiconify-frame elscreen-map)
   (bind-key "C-z"          'suspend-emacs elscreen-map))
