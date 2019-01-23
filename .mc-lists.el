@@ -10,6 +10,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        View-scroll-page-forward
         browse-url-with-eww
         end-of-buffer
         helm-mini
@@ -18,5 +19,6 @@
         mouse-set-region
         org-agenda-archive-default-with-confirmation
         org-cycle-agenda-files
+        read-only-mode
         tabbar-backward-tab
         ))

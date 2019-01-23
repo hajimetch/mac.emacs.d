@@ -116,6 +116,8 @@
 
 
 ;;; ElScreen
+(bind-key "M-]"            'elscreen-next)
+(bind-key "M-["            'elscreen-previous)
 (bind-key "C-z h"          'helm-elscreen)
 (if window-system
     (bind-key "C-z"        'iconify-or-deiconify-frame elscreen-map)
