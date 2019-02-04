@@ -12,27 +12,7 @@
 (setq skk-server-host "localhost")           ; サーバー機能を利用
 (setq skk-server-portnum 55100)              ; ポートはgoogle-ime-skk
 (setq skk-share-private-jisyo t)             ; 複数 skk 辞書を共有
-
-;; ノーマルステート時に状態遷移した時に、skkが起動している場合、自動的にアスキーモードにする
-(when (locate-library "skk")
-  (require 'skk)
-  (defun my/skk-control ()
-    (when skk-mode
-      (skk-latin-mode)))
-  (add-hook 'evil-normal-state-entry-hook 'my/skk-control))
-
-;; アスキーモードのカーソルの色
-(setq skk-cursor-latin-color "#5BFBD0")
-
-;; ミニバッファでは C-j を改行にしない
-(define-key minibuffer-local-map (kbd "C-j") 'skk-kakutei)
-
-;; ";"をsticky shiftに用いる
-(setq skk-sticky-key ";")
-
-
-;;; 候補表示
-(setq skk-henkan-number-to-display-candidates 7) ; 候補表示件数
+(setq skk-cursor-latin-color "#5BFBD0")      ; アスキーモードのカーソルの色
 
 
 ;;; 動的候補表示
@@ -63,8 +43,10 @@
 (setq skk-henkan-strict-okuri-precedence t) ; 送り仮名が厳密に正しい候補を優先して表示
 (setq skk-auto-start-henkan nil)            ; 区切り文字で変換しない
 (setq skk-previous-candidate-keys '("x")) ; 前候補表示キーからC-pを除外
+(setq skk-search-katakana 'jisx0201-kana) ; カタカナを変換候補に入れる
+(bind-key "C-j" 'skk-kakutei minibuffer-local-map) ; ミニバッファでは C-j を改行にしない
 (require 'skk-hint)                       ; ヒント
-(add-hook 'skk-load-hook                ; 自動的に入力モードを切り替え
+(add-hook 'skk-load-hook                  ; 自動的に入力モードを切り替え
       (lambda ()
         (require 'context-skk)))
 
@@ -74,10 +56,6 @@
 (setq skk-show-japanese-menu t)         ; メニューを日本語に
 
 
-;;; カタカナを変換候補に入れる
-(setq skk-search-katakana 'jisx0201-kana)
-
-
 ;;; 基本辞書
 (setq skk-large-jisyo "~/Dropbox/Emacs/ddskk/SKK-JISYO.L")
 
@@ -85,9 +63,13 @@
 ;;; かな変換トグル
 (defun my/skk-set-henkan ()
   (interactive)
-  (skk-mode)
-  (skk-j-mode-on)
-  (skk-set-henkan-point-subr))
+  (cond (skk-j-mode
+         (skk-mode)
+         (skk-j-mode-on)
+         (skk-set-henkan-point-subr))
+        (t
+         (skk-mode)
+         (skk-j-mode-on))))
 
 
 ;;; 次候補を表示
