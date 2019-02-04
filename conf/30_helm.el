@@ -57,7 +57,7 @@
 
 
 ;;; Projectile
-(projectile-global-mode)
+(projectile-mode t)
 (setq projectile-completion-system 'helm)
 
 ;; helm-projectile

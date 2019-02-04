@@ -64,11 +64,11 @@
 (defun my/skk-set-henkan ()
   (interactive)
   (cond (skk-j-mode
-         (skk-mode)
+         (skk-mode t)
          (skk-j-mode-on)
          (skk-set-henkan-point-subr))
         (t
-         (skk-mode)
+         (skk-mode t)
          (skk-j-mode-on))))
 
 

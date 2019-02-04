@@ -10,11 +10,14 @@
 (add-to-list 'company-backends 'company-jedi)
 
 
-;;; global-flycheck-mode
+;;; flycheck
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (flycheck-add-next-checker 'python-flake8 'python-pylint)
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+
+;; flycheck-pos-tip
+(flycheck-pos-tip-mode t)
 
 
 ;;; js2-mode
