@@ -45,7 +45,7 @@ skk-candidate-buffer-background-color-odd "grey20")
                  (note (cdr value))	;注釈
                  (sep (if note		;セパレータ
                           (propertize (if (skk-annotation-display-p 'list)
-                                          " ≒ "
+                                          " = "
                                         " !")
                                       'face 'skk-emacs-jisx0208-latin-face)
                         nil)))
