@@ -216,6 +216,15 @@
 (global-fci-mode t)
 
 
+;;; popwin
+(require 'popwin)
+(setq helm-display-function #'display-buffer)
+(setq display-buffer-function 'popwin:display-buffer)
+(setq popwin:special-display-config
+      '(("*complitation*" :noselect t)
+        ("helm" :regexp t :height 0.4)))
+
+
 ;;; ダイアログボックスを抑制する
 (defalias 'message-box 'message)
 (setq use-dialog-box nil)
