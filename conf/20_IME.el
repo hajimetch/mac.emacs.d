@@ -30,7 +30,6 @@
           (cons e popwin:special-display-config))))
 
 ;; 背景色
-
 (setq skk-candidate-buffer-background-color "grey30"
 skk-candidate-buffer-background-color-odd "grey20")
 

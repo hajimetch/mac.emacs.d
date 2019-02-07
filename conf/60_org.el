@@ -76,6 +76,10 @@
 (setq org-clock-clocked-in-display 'frame-title)
 
 
+;;; Archive ファイルを datetree で管理
+(setq org-archive-location "~/Dropbox/Emacs/org/archive.org::datetree/")
+
+
 ;;; 日本語 PDF を出力する
 ;; LaTeX article class
 (setq org-export-latex-classes
@@ -95,7 +99,3 @@
 ;; LaTeX から PDF を作成するコマンド
 (when (executable-find "platexpdf")
   (setq org-latex-pdf-process '("platexpdf %f")))
-
-
-;;; Archive ファイルを datetree で管理
-(setq org-archive-location "~/Dropbox/Emacs/org/archive.org::datetree/")
