@@ -58,5 +58,6 @@ flycheck_*.el
 /projectile.cache
 /recentf
 /semanticdb/
+/transient/
 /undohist/
 /url/

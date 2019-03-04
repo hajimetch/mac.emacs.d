@@ -2,8 +2,8 @@
 ;; SKK の設定
 ;; ---------------------------------------------------------
 ;;; 全般
-(require 'skk)
 (setq skk-user-directory "~/Dropbox/Emacs/ddskk/") ; 設定ファイルパス
+(require 'skk)
 (when (require 'skk nil t)
   (setq default-input-method "japanese-skk") ; emacs上での日本語入力にskkを使う
   (require 'skk-study))                      ; 変換学習機能の追加
@@ -13,7 +13,6 @@
 (setq skk-server-host "localhost")           ; サーバー機能を利用
 (setq skk-server-portnum 55100)              ; ポートはgoogle-ime-skk
 (setq skk-share-private-jisyo t)             ; 複数 skk 辞書を共有
-(setq skk-cursor-latin-color "#5BFBD0")      ; アスキーモードのカーソルの色
 
 
 ;;; 候補表示
@@ -30,8 +29,8 @@
           (cons e popwin:special-display-config))))
 
 ;; 背景色
-(setq skk-candidate-buffer-background-color "grey30"
-skk-candidate-buffer-background-color-odd "grey20")
+(setq skk-candidate-buffer-background-color "grey30")
+(setq skk-candidate-buffer-background-color-odd "grey20")
 
 ;; fringe を消す
 (setq skk-candidate-buffer-display-fringes nil)
@@ -116,18 +115,6 @@ skk-candidate-buffer-background-color-odd "grey20")
 
 ;;; 基本辞書
 (setq skk-large-jisyo "~/Dropbox/Emacs/ddskk/SKK-JISYO.L")
-
-
-;;; かな変換トグル
-(defun my/skk-set-henkan ()
-  (interactive)
-  (cond (skk-j-mode
-         (skk-mode t)
-         (skk-j-mode-on)
-         (skk-set-henkan-point-subr))
-        (t
-         (skk-mode t)
-         (skk-j-mode-on))))
 
 
 ;;; 次候補を表示
