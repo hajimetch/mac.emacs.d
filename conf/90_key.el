@@ -141,6 +141,7 @@
 (bind-key "C-c p"          'ps-print-region)    ; PDF作成
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
+(bind-key "C-c t"          'my/eshell-pop)      ; eshellを開く
 (bind-key "C-c ,,"         nil semantic-mode-map) ; howm-menuとの重複を回避
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント

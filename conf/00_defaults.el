@@ -13,6 +13,12 @@
 ;;; desktop-save-mode
 (desktop-save-mode t)
 
+;; load theme after restoring desktop
+(add-to-list 'desktop-globals-to-save 'custom-enabled-themes)
+(defun desktop-load-theme () "load custom theme" (interactive)
+  (dolist (th custom-enabled-themes) (load-theme th)))
+(add-hook 'desktop-after-read-hook 'desktop-load-theme)
+
 
 ;;; 文字コード
 (set-language-environment "Japanese")

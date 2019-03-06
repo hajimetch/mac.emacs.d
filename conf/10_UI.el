@@ -48,15 +48,15 @@
 
 ;; Whitespace 色設定
 (defvar my/fg-color "dark gray")
-(defvar my/bg-color "black")
+(defvar my/bg-color "gray16")
 (set-face-attribute 'whitespace-trailing nil
                     :background my/bg-color
                     :foreground my/fg-color)
 (set-face-attribute 'whitespace-tab nil
-                    :background nil
+                    :background my/bg-color
                     :foreground my/fg-color)
 (set-face-attribute 'whitespace-space nil
-                    :background nil
+                    :background my/bg-color
                     :foreground my/fg-color)
 (set-face-attribute 'whitespace-empty nil
                     :background my/bg-color
@@ -224,6 +224,7 @@
       '(("*Completions*"  :height 0.4)
         ("*complitation*" :height 0.4 :noselect t)
         ("*Help*" :height 0.4 :noselect t :stick t)
+        ("*eshell" :regexp t :dedicated t :height 0.4)
         ("helm" :regexp t :height 0.4)
         ("Helm" :regexp t :height 0.4)))
 
