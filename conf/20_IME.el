@@ -84,7 +84,7 @@
 (setq skk-comp-circulate t)           ; 見出し語の補完時の候補の表示順
 (setq skk-egg-like-newline t)         ; Enterで改行しない
 (setq skk-auto-insert-paren t)        ; 閉じカッコを自動的に
-(setq skk-auto-start-henkan nil)      ; 区切り文字で変換しない
+(setq skk-auto-start-henkan t)        ; 区切り文字で自動変換
 (setq skk-share-private-jisyo t)      ; 個人辞書を複数Emacsで共有
 (setq skk-delete-implies-kakutei nil) ; ▼モードで一つ前の候補を表示する
 (setq skk-previous-candidate-keys '("x")) ; 前候補表示キーからC-pを除外

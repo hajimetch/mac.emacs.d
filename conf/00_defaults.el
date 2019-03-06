@@ -128,16 +128,10 @@
 (which-key-mode t)
 
 
-;;; 自動保存
-(require 'real-auto-save)
-(setq real-auto-save-interval 10)       ; 自動保存間隔
-(add-hook 'find-file-hook 'real-auto-save-mode)
-
-
 ;;; バックアップ(xxx~)
 (setq make-backup-files     t)    ; 自動バックアップの実行有無
 (setq version-control       t)    ; バックアップファイルへの番号付与
-(setq kept-new-versions  2000)    ; 最新バックアップファイルの保持数
+(setq kept-new-versions   100)    ; 最新バックアップファイルの保持数
 (setq kept-old-versions     1)    ; 最古バックアップファイルの保持数
 (setq delete-old-versions   t)    ; バックアップファイル削除の実行有無
 
@@ -150,14 +144,21 @@
 
 
 ;;; 自動保存ファイル(#xxx#)
-;; 作成しない
-(setq auto-save-default   nil)
+;; 作成する
+(setq auto-save-default     t)
+
+;; 保存の間隔
+(setq auto-save-timeout    10)           ; 秒
+(setq auto-save-interval  100)           ; 打鍵
+
+;; 自動保存ファイル(#xxx#)の格納ディレクトリ
+(setq auto-save-file-name-transforms
+      `((".*", (expand-file-name "~/Dropbox/Emacs/backups/mac/") t)))
 
 
 ;;; 自動保存のリスト(~/.emacs.d/auto-save-list/.saves-xxx)
-;; 作成しない
-(setq auto-save-list-file-name   nil)
-(setq auto-save-list-file-prefix nil)
+;; 作成する
+(setq auto-save-list-file-prefix "~/Dropbox/Emacs/backups/mac/saves-")
 
 
 ;;; ロックファイル(.#xxx)
@@ -278,6 +279,3 @@
 
 ;; ad-handle-definition 対応
 (setq ad-redefinition-action 'accept)
-
-;; 読み取り専用モードで開く
-(add-hook 'find-file-hooks 'view-mode)

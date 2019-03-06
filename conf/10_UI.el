@@ -219,7 +219,6 @@
 ;;; popwin
 (require 'popwin)
 (popwin-mode 1)
-(setq pop-up-windows t)
 (setq display-buffer-function 'popwin:display-buffer)
 (setq popwin:special-display-config
       '(("*Completions*"  :height 0.4)

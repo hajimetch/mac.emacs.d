@@ -13,7 +13,7 @@
     ("/Users/hajimetch/Dropbox/Emacs/org/note.org" "/Users/hajimetch/Dropbox/Emacs/org/archive.org" "/Users/hajimetch/Dropbox/Emacs/org/task.org")))
  '(package-selected-packages
    (quote
-    (popwin flycheck-pos-tip helm-elscreen elscreen migemo init-loader ini-mode helm-rg helm-projectile projectile magit ddskk which-key json-mode rotate howm switch-buffer-functions undohist real-auto-save recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop term-run shell-pop shell-toggle js2-mode fill-column-indicator py-yapf quickrun multi-term flycheck helm-c-yasnippet helm hungry-delete tabbar exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
+    (popwin flycheck-pos-tip helm-elscreen elscreen migemo init-loader ini-mode helm-rg helm-projectile projectile magit ddskk which-key json-mode rotate howm switch-buffer-functions undohist recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop term-run shell-pop shell-toggle js2-mode fill-column-indicator py-yapf quickrun multi-term flycheck helm-c-yasnippet helm hungry-delete tabbar exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
  '(recentf-auto-cleanup (quote never))
  '(shell-pop-default-directory "~/")
  '(shell-pop-full-span t)
