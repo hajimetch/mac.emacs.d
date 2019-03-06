@@ -166,10 +166,13 @@
 (setq create-lockfiles    nil)
 
 
-;;; バッファ再読み込み関数
-(defun my/revert-buffer ()
-    "Revert buffer without confirmation."
-    (interactive) (revert-buffer t t))
+;;; バックアップを作成しないファイルの設定
+(defvar backup-inhibit-file-name-regexp "recentf")
+(defun regexp-backup-enable-predicate (filename)
+  (save-match-data
+    (and (not (string-match backup-inhibit-file-name-regexp filename))
+     (normal-backup-enable-predicate filename))))
+(setq backup-enable-predicate 'regexp-backup-enable-predicate)
 
 
 ;;; recentf 関連
@@ -193,6 +196,12 @@
 ;; 30秒ごとに recentf を保存
 (run-with-idle-timer 30 t '(lambda ()
    (with-suppressed-message (recentf-save-list))))
+
+
+;;; バッファ再読み込み関数
+(defun my/revert-buffer ()
+    "Revert buffer without confirmation."
+    (interactive) (revert-buffer t t))
 
 
 ;;; abbrev file
