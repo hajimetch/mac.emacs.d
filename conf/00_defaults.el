@@ -15,9 +15,9 @@
 
 ;; load theme after restoring desktop
 (add-to-list 'desktop-globals-to-save 'custom-enabled-themes)
-(defun desktop-load-theme () "load custom theme" (interactive)
+(defun my/desktop-load-theme () "load custom theme" (interactive)
   (dolist (th custom-enabled-themes) (load-theme th)))
-(add-hook 'desktop-after-read-hook 'desktop-load-theme)
+(add-hook 'desktop-after-read-hook 'my/desktop-load-theme)
 
 
 ;;; 文字コード
@@ -74,7 +74,7 @@
 ;; スクロール時の行数
 (setq scroll-conservatively 10000)
 
-;; スクロール時の行数（scroll-margin に影響せず）
+;; スクロール時の行数 (scroll-margin に影響せず)
 (setq scroll-step 0)
 
 ;; 画面スクロール時の重複表示する行数
@@ -142,8 +142,8 @@
 (setq delete-old-versions   t)    ; バックアップファイル削除の実行有無
 
 ;; 保存時に毎回バックアップ
-(defun setq-buffer-backed-up-nil (&rest _) (interactive) (setq buffer-backed-up nil))
-(advice-add 'save-buffer :before 'setq-buffer-backed-up-nil)
+(defun my/setq-buffer-backed-up-nil (&rest _) (interactive) (setq buffer-backed-up nil))
+(advice-add 'save-buffer :before 'my/setq-buffer-backed-up-nil)
 
 ;; バックアップ(xxx~)の格納ディレクトリ
 (setq backup-directory-alist '((".*" . "~/Dropbox/Emacs/backups/mac")))
@@ -174,11 +174,11 @@
 
 ;;; バックアップを作成しないファイルの設定
 (defvar backup-inhibit-file-name-regexp "recentf")
-(defun regexp-backup-enable-predicate (filename)
+(defun my/backup-enable-predicate (filename)
   (save-match-data
     (and (not (string-match backup-inhibit-file-name-regexp filename))
      (normal-backup-enable-predicate filename))))
-(setq backup-enable-predicate 'regexp-backup-enable-predicate)
+(setq backup-enable-predicate 'my/backup-enable-predicate)
 
 
 ;;; recentf 関連

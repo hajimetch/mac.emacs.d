@@ -58,11 +58,13 @@
           (goto-line line))
       (view-file (pop args)))))
 
-;; open eshell with cd
+;; open eshell with current directory
 (defun my/eshell-pop (&optional arg)
-  "invoke eshell and cd to current directory"
   (interactive "P")
-  (let ((dir default-directory))
-    (eshell arg)
-    (cd dir))
-  (goto-char (point-max)))
+  (cond ((equal (buffer-name) "*eshell*")
+         (kill-buffer "*eshell*"))
+        (t
+         (let ((dir default-directory))
+           (eshell arg)
+           (cd dir))
+         (goto-char (point-max)))))

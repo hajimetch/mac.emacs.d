@@ -105,12 +105,9 @@
 
 ;;; 個人辞書の自動保存
 (defvar skk-auto-save-jisyo-interval 600)
-(defun skk-auto-save-jisyo ()
-  (skk-save-jisyo)
-  )
 (run-with-idle-timer skk-auto-save-jisyo-interval
                      skk-auto-save-jisyo-interval
-                     'skk-auto-save-jisyo)
+                     'skk-save-jisyo)
 
 
 ;;; 基本辞書
