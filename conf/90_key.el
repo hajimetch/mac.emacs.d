@@ -5,6 +5,8 @@
 
 
 ;;; ddskk
+(unbind-key "C-J")
+(unbind-key "C-:")
 (bind-key "C-x C-j"        'skk-mode)
 (bind-keys :map skk-j-mode-map
            ("S-SPC" .      skk-previous-candidate)
@@ -142,9 +144,10 @@
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
 (bind-key "C-c t"          'my/eshell-pop)      ; eshellを開く
-(bind-key "C-c ,,"         nil semantic-mode-map) ; howm-menuとの重複を回避
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
+(bind-key "C-c ,,"         nil semantic-mode-map) ; howm-menuとの重複を回避
+(bind-key "C-t"            nil dired-mode-map) ; other-windowとの重複を回避
 (bind-key "<backtab>"      '(lambda() (interactive) (insert "	")))
                                         ; インデント
 (bind-key "<f1>"           'help-for-help) ; ヘルプ参照
