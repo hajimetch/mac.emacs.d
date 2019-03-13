@@ -222,8 +222,8 @@
 (setq display-buffer-function 'popwin:display-buffer)
 (setq popwin:special-display-config
       '(("*Completions*"  :height 0.4)
-        ("*complitation*" :height 0.4 :noselect t)
-        ("*Help*" :height 0.4 :noselect t :stick t)
+        ("*complitation*" :noselect t :height 0.4)
+        ("*Help*" :noselect t :stick t :height 0.4)
         ("*eshell" :regexp t :dedicated t :height 0.4)
         ("helm" :regexp t :height 0.4)
         ("Helm" :regexp t :height 0.4)))

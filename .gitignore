@@ -52,8 +52,11 @@ flycheck_*.el
 
 ### custom settings
 
+/.python-environments/
+/.python-version
 /bookmarks
 /games/
+/kkcrc
 /projectile-bookmarks.eld
 /projectile.cache
 /recentf
