@@ -1,37 +1,3 @@
-;;; shell の存在を確認
-(defun my/check-shell ()
-  (or (executable-find "zsh")
-      (executable-find "bash")
-      (executable-find "cmdproxy")
-      (error "can't find 'shell' command in PATH!!")))
-
-
-;;; shell 名
-(setq shell-file-name (my/check-shell))
-(setenv "SHELL" shell-file-name)
-(setq explicit-shell-file-name shell-file-name)
-
-
-;;; Emacs が保持する terminfo を利用する
-(setq system-uses-terminfo nil)
-
-
-;;; エスケープを綺麗に表示する
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-
-;;; multi-term
-(require 'multi-term)
-(setq multi-term-program shell-file-name)
-
-;; multi-term-toggle
-(defun my/multi-term-toggle ()
-  (interactive)
-  (progn (multi-term-dedicated-toggle)
-         (if (multi-term-dedicated-exist-p) (multi-term-dedicated-select))))
-
-
 ;;; Eshell
 ;; eshell alias
 (setq eshell-command-aliases-list
@@ -60,6 +26,7 @@
 
 ;; open eshell with current directory
 (defun my/eshell-pop (&optional arg)
+  "Popup eshell and cd to current directory."
   (interactive "P")
   (cond ((equal (buffer-name) "*eshell*")
          (kill-buffer "*eshell*"))

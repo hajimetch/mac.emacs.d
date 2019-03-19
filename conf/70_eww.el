@@ -7,26 +7,29 @@
 
 
 ;;; eww 背景色の設定
-(defvar eww-disable-colorize t)
+(defvar my/eww-disable-colorize t
+  "Variable for disabling eww colorize.")
 (defun my/shr-colorize-region--disable (orig start end fg &optional bg &rest _)
-  (unless eww-disable-colorize
+  "Function used to disable colorizing region on eww."
+  (unless my/eww-disable-colorize
     (funcall orig start end fg)))
 (advice-add 'shr-colorize-region :around 'my/shr-colorize-region--disable)
 (advice-add 'eww-colorize-region :around 'my/shr-colorize-region--disable)
 (defun my/eww-disable-color ()
-  "eww で文字色を反映させない"
+  "Disable colorize on eww."
   (interactive)
-  (setq-local eww-disable-colorize t)
+  (setq-local my/eww-disable-colorize t)
   (eww-reload))
 (defun my/eww-enable-color ()
-  "eww で文字色を反映させる"
+  "Enable colorize on eww."
   (interactive)
-  (setq-local eww-disable-colorize nil)
+  (setq-local my/eww-disable-colorize nil)
   (eww-reload))
 
 
 ;;; 現在の url を eww で開く
 (defun my/browse-url-with-eww ()
+  "Browse current url with eww."
   (interactive)
   (let ((url-region (bounds-of-thing-at-point 'url)))
     ;; url
@@ -40,19 +43,21 @@
 
 ;;; 画像表示の設定
 (defun my/eww-disable-images ()
-  "eww で画像表示させない"
+  "Disable showing images on eww."
   (interactive)
   (setq-local shr-put-image-function 'my/shr-put-image-alt)
   (eww-reload))
 (defun my/eww-enable-images ()
-  "eww で画像表示させる"
+  "Enable showing images on eww."
   (interactive)
   (setq-local shr-put-image-function 'shr-put-image)
   (eww-reload))
 (defun my/shr-put-image-alt (spec alt &optional flags)
+  "Put image alt text."
   (insert alt))
 
-;; はじめから非表示
+;; 始めから非表示
 (defun my/eww-mode-hook--disable-image ()
+  "Disable showing images with eww-mode-hook."
   (setq-local shr-put-image-function 'my/shr-put-image-alt))
 (add-hook 'eww-mode-hook 'my/eww-mode-hook--disable-image)

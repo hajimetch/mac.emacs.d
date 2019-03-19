@@ -15,7 +15,9 @@
 
 ;; load theme after restoring desktop
 (add-to-list 'desktop-globals-to-save 'custom-enabled-themes)
-(defun my/desktop-load-theme () "load custom theme" (interactive)
+(defun my/desktop-load-theme ()
+  "Load custom theme."
+  (interactive)
   (dolist (th custom-enabled-themes) (load-theme th)))
 (add-hook 'desktop-after-read-hook 'my/desktop-load-theme)
 
@@ -142,7 +144,9 @@
 (setq delete-old-versions   t)    ; バックアップファイル削除の実行有無
 
 ;; 保存時に毎回バックアップ
-(defun my/setq-buffer-backed-up-nil (&rest _) (interactive) (setq buffer-backed-up nil))
+(defun my/setq-buffer-backed-up-nil (&rest _)
+  "Function used to always backup buffer when saved."
+  (interactive) (setq buffer-backed-up nil))
 (advice-add 'save-buffer :before 'my/setq-buffer-backed-up-nil)
 
 ;; バックアップ(xxx~)の格納ディレクトリ
@@ -173,10 +177,12 @@
 
 
 ;;; バックアップを作成しないファイルの設定
-(defvar backup-inhibit-file-name-regexp "recentf")
+(defvar my/backup-inhibit-file-name-regexp "recentf"
+  "Regexp of file name not for backup.")
 (defun my/backup-enable-predicate (filename)
+  "Function used to inhibit from backing up files specified by var my/backup-inhibit-file-name-regexp."
   (save-match-data
-    (and (not (string-match backup-inhibit-file-name-regexp filename))
+    (and (not (string-match my/backup-inhibit-file-name-regexp filename))
      (normal-backup-enable-predicate filename))))
 (setq backup-enable-predicate 'my/backup-enable-predicate)
 
@@ -185,13 +191,6 @@
 (require 'recentf)
 (require 'recentf-ext)
 
-;; *Messages* に無駄な表示を出さない
-(defmacro with-suppressed-message (&rest body)
-  "Suppress new messages temporarily in the echo area and the `*Messages*' buffer while BODY is evaluated."
-  (declare (indent 0))
-  (let ((message-log-max nil))
-    `(with-temp-message (or (current-message) "") ,@body)))
-
 ;; 除外するファイル
 (setq recentf-exclude '("recentf"))
 (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME")))
@@ -199,9 +198,16 @@
 ;; recentf に保存するファイルの数
 (setq recentf-max-saved-items 1000)
 
+;; *Messages* に不要な出力を行わないための設定
+(defmacro my/with-suppressed-message (&rest body)
+  "Suppress new messages temporarily in the echo area and the `*Messages*' buffer while BODY is evaluated."
+  (declare (indent 0))
+  (let ((message-log-max nil))
+    `(with-temp-message (or (current-message) "") ,@body)))
+
 ;; 30秒ごとに recentf を保存
 (run-with-idle-timer 30 t '(lambda ()
-   (with-suppressed-message (recentf-save-list))))
+   (my/with-suppressed-message (recentf-save-list))))
 
 
 ;;; バッファ再読み込み関数
@@ -243,7 +249,6 @@
   (let ((editable (not buffer-read-only))
         (pt (save-excursion (mouse-set-point last-nonmenu-event)))
         beg end)
-
     (if (and mark-active
              (<= (region-beginning) pt) (<= pt (region-end)) )
         (setq beg (region-beginning)
@@ -253,7 +258,6 @@
         (setq end (progn (forward-word) (point)))
         (setq beg (progn (backward-word) (point)))
         ))
-
     (start-process "dictionary.app" "*dictionary-region*"
                    "open"
                    (concat "dict:///"

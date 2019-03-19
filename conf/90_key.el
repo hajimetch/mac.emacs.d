@@ -16,6 +16,8 @@
            ("<up>" .       my/skk-previous-candidate)
            ("C-M-," .      skk-toggle-kutouten)
            ("<C-M-backspace>" . skk-undo-kakutei))
+(bind-key "C-j" 'skk-kakutei helm-map)
+(bind-key "C-j" 'skk-kakutei minibuffer-local-map)
 
 
 ;;; Helm

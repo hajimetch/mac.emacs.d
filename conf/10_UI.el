@@ -88,6 +88,7 @@
 (require 'color)
 
 (defun my/rainbow-delimiters-using-stronger-colors ()
+  "Run rainbow-delimiters using stronger colors."
   (interactive)
   (cl-loop
    for index from 1 to rainbow-delimiters-max-face-count
@@ -104,6 +105,7 @@
 
 ;; リージョン内の行数と文字数をモードラインに表示する
 (defun my/count-lines-and-chars ()
+  "Function used to show number of lines and chars of region in modeline."
   (if mark-active
       (format "(%dlines, %dchars) "
               (count-lines (region-beginning)(region-end))
@@ -159,11 +161,13 @@
 (require 'hl-line)
 
 ;; ハイライトを無効にするメジャーモードを指定
-(defvar global-hl-line-timer-exclude-modes '(todotxt-mode))
+(defvar my/global-hl-line-timer-exclude-modes '(todotxt-mode)
+  "Major mode for disabling hl-line.")
 
 ;; ハイライトに0.03秒の猶予を与え、カーソル移動を軽くする
 (defun my/global-hl-line-timer-function ()
-  (unless (memq major-mode global-hl-line-timer-exclude-modes)
+  "Function used to smooth cursor movement."
+  (unless (memq major-mode my/global-hl-line-timer-exclude-modes)
     (global-hl-line-unhighlight-all)
     (let ((global-hl-line-mode t))
       (global-hl-line-highlight))))
@@ -222,9 +226,9 @@
 (setq display-buffer-function 'popwin:display-buffer)
 (setq popwin:special-display-config
       '(("*Completions*"  :height 0.4)
-        ("*complitation*" :noselect t :height 0.4)
+        ("*compilation*" :noselect t :height 0.4)
         ("*Help*" :noselect t :stick t :height 0.4)
-        ("*eshell" :regexp t :dedicated t :height 0.4)
+        ("*eshell*" :dedicated t :height 0.4)
         ("helm" :regexp t :height 0.4)
         ("Helm" :regexp t :height 0.4)))
 
