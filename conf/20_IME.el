@@ -22,8 +22,8 @@
 
 
 ;;; *候補*バッファ
-(let ((target '(("*候補*"           :position bottom :height 10 :noselect t)
-                ("*SKK annotation*" :position bottom :height 10 :noselect t))))
+(let ((target '(("*候補*"           :noselect t :height 10)
+                ("*SKK annotation*" :noselect t :height 10))))
   (dolist (e target)
     (setq popwin:special-display-config
           (cons e popwin:special-display-config))))
@@ -39,9 +39,9 @@
 (setq skk-treat-candidate-appearance-function
       #'(lambda (candidate listing-p)
           (let* ((value (skk-treat-strip-note-from-word candidate))
-                 (cand (car value))	;候補
-                 (note (cdr value))	;注釈
-                 (sep (if note		;セパレータ
+                 (cand (car value))     ;候補
+                 (note (cdr value))     ;注釈
+                 (sep (if note          ;セパレータ
                           (propertize (if (skk-annotation-display-p 'list)
                                           " = "
                                         " !")
@@ -80,8 +80,11 @@
 
 
 ;;; 動作
+(require 'skk-hint)                   ; ヒントを使う
 (setq skk-verbose t)                  ; 詳細なメッセージを表示
+(setq skk-sticky-key ";")             ; ";"をsticky shift keyに
 (setq skk-comp-circulate t)           ; 見出し語の補完時の候補の表示順
+(setq skk-hint-start-char ?')         ; ヒントを表示するキー
 (setq skk-egg-like-newline t)         ; Enterで改行しない
 (setq skk-auto-insert-paren t)        ; 閉じカッコを自動的に
 (setq skk-auto-start-henkan t)        ; 区切り文字で自動変換
@@ -91,7 +94,6 @@
 (setq skk-search-katakana 'jisx0201-kana) ; カタカナを変換候補に入れる
 (setq skk-henkan-strict-okuri-precedence t) ; 送り仮名が厳密に正しい候補を優先して表示
 (setq skk-use-auto-enclose-pair-of-region t) ; リージョンを括弧で囲む
-(require 'skk-hint)                       ; ヒント
 (add-hook 'skk-load-hook                  ; 自動的に入力モードを切り替え
       (lambda ()
         (require 'context-skk)))

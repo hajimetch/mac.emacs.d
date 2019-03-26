@@ -236,11 +236,6 @@
 (setq helm-display-function #'display-buffer)
 
 
-;;; ダイアログボックスを抑制する
-(defalias 'message-box 'message)
-(setq use-dialog-box nil)
-
-
 ;;; rotete-window でカーソルを元のウィンドウに残す
 (defadvice rotate-window (after rotate-cursor activate)
   (other-window 1))
