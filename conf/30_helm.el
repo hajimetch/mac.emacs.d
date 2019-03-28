@@ -51,9 +51,28 @@
 ;; リストを循環しない
 (setq helm-swoop-move-to-line-cycle nil)
 
+;; migemo なしで helm-swoop
+(cl-defun my/helm-swoop-nomigemo (&key $query ($multiline current-prefix-arg))
+  "helm-swoop without migemo."
+  (interactive)
+  (let (helm-migemo-mode)
+    (helm-swoop :$query $query :$multiline $multiline)))
 
-;;; helm-rg
-(require 'helm-rg)
+;; isearch, helm-swoop, helm-occur を切り替える
+(defun my/multi-search (use-helm-swoop)
+  "Switch search function depending on the situation."
+  (interactive "p")
+  (let (current-prefix-arg
+        (helm-swoop-pre-input-function 'ignore))
+    (call-interactively
+     (case use-helm-swoop
+       (1 'isearch-forward)
+       (4 (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
+       (16 'my/helm-swoop-nomigemo)))))
+
+
+;;; helm-ag を ripgrep で利用
+(setq helm-ag-base-command "rg --vimgrep --no-heading")
 
 
 ;;; Projectile
@@ -67,6 +86,18 @@
 ;; fd を使用
 (setq projectile-git-command "fd . -0")
 (setq projectile-generic-command "fd . -0")
+
+;; helm-projectile-ag が ripgrep で機能しない問題を回避
+(defun helm-projectile-ag (&optional options)
+  "Helm version of projectile-ag."
+  (interactive (if current-prefix-arg (list (read-string "option: " "" 'helm-ag--extra-options-history))))
+  (if (require 'helm-ag nil  'noerror)
+      (if (projectile-project-p)
+          (let ((helm-ag-command-option options)
+                (current-prefix-arg nil))
+            (helm-do-ag (projectile-project-root) (car (projectile-parse-dirconfig-file))))
+        (error "You're not in a project"))
+    (error "helm-ag not available")))
 
 
 ;;; helm-find-file から browse-project を呼び出す
