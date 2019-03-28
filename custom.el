@@ -12,7 +12,7 @@
     ("/Users/hajimetch/Dropbox/Emacs/org/note.org" "/Users/hajimetch/Dropbox/Emacs/org/archive.org" "/Users/hajimetch/Dropbox/Emacs/org/task.org")))
  '(package-selected-packages
    (quote
-    (helm-ag helm-descbinds sticky popwin flycheck-pos-tip helm-elscreen elscreen migemo init-loader ini-mode helm-projectile projectile magit ddskk which-key json-mode rotate howm undohist recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop js2-mode fill-column-indicator py-yapf quickrun flycheck helm-c-yasnippet helm hungry-delete exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
+    (undo-tree helm-ag helm-descbinds sticky popwin flycheck-pos-tip helm-elscreen elscreen migemo init-loader ini-mode helm-projectile projectile magit ddskk which-key json-mode rotate howm undohist recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop js2-mode fill-column-indicator py-yapf quickrun flycheck helm-c-yasnippet helm hungry-delete exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
  '(recentf-auto-cleanup (quote never)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

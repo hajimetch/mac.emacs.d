@@ -78,6 +78,11 @@
 (bind-key "C--"            'er/contract-region)
 
 
+;;; point-undo
+(bind-key "M-["            'point-undo)
+(bind-key "M-]"            'point-redo)
+
+
 ;;; isearch
 (bind-key "C-s"            'my/multi-search)
 (bind-keys :map isearch-mode-map
@@ -123,8 +128,8 @@
 
 
 ;;; ElScreen
-(bind-key "M-]"            'elscreen-next)
-(bind-key "M-["            'elscreen-previous)
+(bind-key "C-}"            'elscreen-next)
+(bind-key "C-{"            'elscreen-previous)
 (bind-key "C-z h"          'helm-elscreen)
 (if window-system
     (bind-key "C-z"        'iconify-or-deiconify-frame elscreen-map)
@@ -148,10 +153,11 @@
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
 (bind-key "C-c t"          'my/eshell-pop)      ; eshellを開く
+(bind-key "C-c C-c"        'my/howm-save-buffer-and-kill) ; メモ自動保存
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
-(bind-key "C-c ,,"         nil semantic-mode-map) ; howm-menuとの重複を回避
-(bind-key "C-t"            nil dired-mode-map) ; other-windowとの重複を回避
+(bind-key "C-c ,,"         'howm-menu semantic-mode-map) ; 重複を回避
+(bind-key "C-t"            'other-window dired-mode-map) ; 重複を回避
 (bind-key "<backtab>"      '(lambda() (interactive) (insert "	")))
                                         ; インデント
 (bind-key "<f1>"           'help-for-help) ; ヘルプ参照

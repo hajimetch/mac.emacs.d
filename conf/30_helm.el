@@ -72,7 +72,7 @@
 
 
 ;;; helm-ag を ripgrep で利用
-(setq helm-ag-base-command "rg --vimgrep --no-heading")
+(setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
 
 
 ;;; Projectile

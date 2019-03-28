@@ -196,6 +196,9 @@
 (vhl/install-extension 'undo-tree)
 (volatile-highlights-mode t)
 
+;; point-undo
+(require 'point-undo)
+
 
 ;;; バッファ
 ;; バッファ画面外文字の切り詰め表示
