@@ -29,7 +29,7 @@
   "Popup eshell and cd to current directory."
   (interactive "P")
   (cond ((equal (buffer-name) "*eshell*")
-         (kill-buffer "*eshell*"))
+         (kill-buffer-and-window))
         (t
          (let ((dir default-directory))
            (eshell arg)

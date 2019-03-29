@@ -223,20 +223,16 @@
 (global-fci-mode t)
 
 
-;;; popwin
-(require 'popwin)
-(popwin-mode 1)
-(setq display-buffer-function 'popwin:display-buffer)
-(setq popwin:special-display-config
-      '(("*Completions*"  :height 0.4)
-        ("*compilation*" :noselect t :height 0.4)
-        ("*Help*" :noselect t :stick t :height 0.4)
-        ("*eshell*" :dedicated t :height 0.4)
-        ("helm" :regexp t :height 0.4)
-        ("Helm" :regexp t :height 0.4)))
-
-;; helm を対応させる
-(setq helm-display-function #'display-buffer)
+;;; shackle
+(require 'shackle)
+(setq shackle-rules
+      '((compilation-mode :align below :ratio 0.3)
+        ("*Completions*" :align below :ratio 0.3)
+        ("*Help*" :align below :ratio 0.4)
+        ("*eshell*" :align below :ratio 0.4 :popup t)
+        ("*候補*" :align below :ratio 0.3)
+        ("*SKK annotation*" :align below :ratio 0.3)))
+(shackle-mode t)
 
 
 ;;; rotete-window でカーソルを元のウィンドウに残す

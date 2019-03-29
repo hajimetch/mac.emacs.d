@@ -20,14 +20,6 @@
 (setq skk-show-annotation t)                      ; 注釈を表示
 (setq skk-annotation-delay 0)                     ; 即座に表示
 
-
-;;; *候補*バッファ
-(let ((target '(("*候補*"           :noselect t :height 10)
-                ("*SKK annotation*" :noselect t :height 10))))
-  (dolist (e target)
-    (setq popwin:special-display-config
-          (cons e popwin:special-display-config))))
-
 ;; 背景色
 (setq skk-candidate-buffer-background-color "grey30")
 (setq skk-candidate-buffer-background-color-odd "grey20")
