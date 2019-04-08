@@ -51,22 +51,6 @@
 ;; リストを循環しない
 (setq helm-swoop-move-to-line-cycle nil)
 
-;; migemo なしで helm-swoop
-(defun my/helm-swoop-nomigemo ()
-  "helm-swoop without migemo."
-  (interactive)
-  (let (helm-migemo-mode)
-    (helm-swoop :$multiline nil)))
-
-;; helm-swoop migemo を切り替える
-(defun my/helm-swoop (use-migemo)
-  "Switch helm-swoop migemo with C-u."
-  (interactive "p")
-  (call-interactively
-   (case use-migemo
-     (1  (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
-     (4 'my/helm-swoop-nomigemo))))
-
 
 ;;; helm-ag を ripgrep で利用
 (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")

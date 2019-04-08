@@ -15,7 +15,7 @@
            ("<down>" .     my/skk-next-candidate)
            ("<up>" .       my/skk-previous-candidate)
            ("C-M-," .      skk-toggle-kutouten)
-           ("<C-M-backspace>" . skk-undo-kakutei))
+           ("<S-return>" . skk-undo-kakutei))
 (bind-key "C-j" 'skk-kakutei helm-map)
 (bind-key "C-j" 'skk-kakutei minibuffer-local-map)
 
@@ -34,6 +34,7 @@
 (bind-key "C-S-y"          'helm-show-kill-ring)
 (bind-key "C-c <f1>"       'helm-info)
 (bind-key "<M-f1>"         'helm-apropos)
+(bind-key* "M-m"           'helm-migemo-mode helm-map)
 (bind-keys :map helm-map
            ("TAB" .        helm-execute-persistent-action)
            ("C-z" .        helm-select-action)
@@ -88,14 +89,13 @@
            ("C-d" .        isearch-delete-char)
            ("C-e" .        isearch-edit-string)
            ("C-g" .        (lambda() (interactive) (isearch-done)))
-           ("C-u" .        migemo-isearch-toggle-migemo)
            ("C-y" .        isearch-yank-kill)
            ("TAB" .        isearch-yank-word)
            ("M-s" .        helm-swoop-from-isearch))
 
 
 ;;; helm-swoop
-(bind-key "M-s"            'my/helm-swoop)
+(bind-key "M-s"            'helm-swoop)
 (bind-keys :map helm-swoop-map
            ("C-s" .        helm-next-line)
            ("C-r" .        helm-previous-line))
