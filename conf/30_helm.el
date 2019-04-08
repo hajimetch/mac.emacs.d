@@ -52,23 +52,20 @@
 (setq helm-swoop-move-to-line-cycle nil)
 
 ;; migemo なしで helm-swoop
-(cl-defun my/helm-swoop-nomigemo (&key $query ($multiline current-prefix-arg))
+(defun my/helm-swoop-nomigemo ()
   "helm-swoop without migemo."
   (interactive)
   (let (helm-migemo-mode)
-    (helm-swoop :$query $query :$multiline $multiline)))
+    (helm-swoop :$multiline nil)))
 
-;; isearch, helm-swoop, helm-occur を切り替える
-(defun my/multi-search (use-helm-swoop)
-  "Switch search function depending on the situation."
+;; helm-swoop migemo を切り替える
+(defun my/helm-swoop (use-migemo)
+  "Switch helm-swoop migemo with C-u."
   (interactive "p")
-  (let (current-prefix-arg
-        (helm-swoop-pre-input-function 'ignore))
-    (call-interactively
-     (case use-helm-swoop
-       (1 'isearch-forward)
-       (4 (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
-       (16 'my/helm-swoop-nomigemo)))))
+  (call-interactively
+   (case use-migemo
+     (1  (if (< 1000000 (buffer-size)) 'helm-occur 'helm-swoop))
+     (4 'my/helm-swoop-nomigemo))))
 
 
 ;;; helm-ag を ripgrep で利用

@@ -47,20 +47,20 @@
         (tab-mark ?\t [?\xBB ?\t]) ))
 
 ;; Whitespace 色設定
-(defvar my/fg-color "dark gray")
-(defvar my/bg-color "gray16")
+(defvar my/fg-color "red1")
+(defvar my/bg-color "red4")
 (set-face-attribute 'whitespace-trailing nil
-                    :background my/bg-color
-                    :foreground my/fg-color)
+                    :foreground (face-attribute 'default :foreground)
+                    :background my/bg-color)
 (set-face-attribute 'whitespace-tab nil
-                    :background my/bg-color
-                    :foreground my/fg-color)
+                    :foreground my/fg-color
+                    :background (face-attribute 'default :background))
 (set-face-attribute 'whitespace-space nil
-                    :background my/bg-color
-                    :foreground my/fg-color)
+                    :foreground my/fg-color
+                    :background (face-attribute 'default :background))
 (set-face-attribute 'whitespace-empty nil
-                    :background my/bg-color
-                    :foreground my/fg-color)
+                    :foreground (face-attribute 'default :foreground)
+                    :background my/bg-color)
 
 ;; デフォルトで視覚化を有効に
 (global-whitespace-mode t)

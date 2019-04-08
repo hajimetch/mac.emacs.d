@@ -74,6 +74,7 @@
 ;;; 動作
 (require 'skk-hint)                   ; ヒントを使う
 (setq skk-verbose t)                  ; 詳細なメッセージを表示
+(setq skk-use-kakasi t)               ; 漢字→かな変換を使う
 (setq skk-sticky-key ";")             ; ";"をsticky shift keyに
 (setq skk-comp-circulate t)           ; 見出し語の補完時の候補の表示順
 (setq skk-hint-start-char ?')         ; ヒントを表示するキー
@@ -86,6 +87,7 @@
 (setq skk-search-katakana 'jisx0201-kana) ; カタカナを変換候補に入れる
 (setq skk-henkan-strict-okuri-precedence t) ; 送り仮名が厳密に正しい候補を優先して表示
 (setq skk-use-auto-enclose-pair-of-region t) ; リージョンを括弧で囲む
+(setq skk-j-mode-function-key-usage 'conversion) ; fnキーを使って変換
 (add-hook 'skk-load-hook                  ; 自動的に入力モードを切り替え
       (lambda ()
         (require 'context-skk)))

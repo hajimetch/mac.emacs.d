@@ -24,7 +24,7 @@
 (bind-key "M-x"            'helm-M-x)
 (bind-key "C-x C-x"        'helm-mini)
 (bind-key "C-x C-f"        'helm-find-files)
-(bind-key "C-c b"          'helm-resume)
+(bind-key "C-x C-z"        'helm-resume)
 (bind-key "C-c g"          'helm-do-ag)
 (bind-key "C-c i"          'helm-semantic-or-imenu)
 (bind-key "C-c k"          'helm-descbinds)
@@ -84,17 +84,18 @@
 
 
 ;;; isearch
-(bind-key "C-s"            'my/multi-search)
 (bind-keys :map isearch-mode-map
            ("C-d" .        isearch-delete-char)
            ("C-e" .        isearch-edit-string)
-           ("C-u" .        helm-swoop-from-isearch)
+           ("C-g" .        (lambda() (interactive) (isearch-done)))
+           ("C-u" .        migemo-isearch-toggle-migemo)
            ("C-y" .        isearch-yank-kill)
            ("TAB" .        isearch-yank-word)
-           ("C-g" .        (lambda() (interactive) (isearch-done))))
+           ("M-s" .        helm-swoop-from-isearch))
 
 
 ;;; helm-swoop
+(bind-key "M-s"            'my/helm-swoop)
 (bind-keys :map helm-swoop-map
            ("C-s" .        helm-next-line)
            ("C-r" .        helm-previous-line))

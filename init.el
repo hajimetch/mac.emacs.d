@@ -20,7 +20,8 @@
 
 
 ;;; function to add load-path (including sub-directory)
-(defun add-to-load-path (&rest paths)
+(defun my/add-to-load-path (&rest paths)
+  "Function to add load-path including sub-directory."
   (let (path)
     (dolist (path paths paths)
       (let ((default-directory
@@ -30,7 +31,7 @@
                 (normal-top-level-add-subdirs-to-load-path))))))
 
 ;; load-path
-(add-to-load-path "elisp")
+(my/add-to-load-path "elisp")
 
 
 ;;; custom-file
@@ -53,8 +54,7 @@
     (dolist (el (init-loader--re-load-files re dir sort))
       (condition-case e
           (let ((time (car (benchmark-run (load (file-name-sans-extension el))))))
-            (init-loader-log (format "loaded
-            %s. %s" (locate-library el) time)))
+            (init-loader-log (format "loaded %s. %s" (locate-library el) time)))
         (error
          (init-loader-error-log
           (format "%s. %s" (locate-library el)
