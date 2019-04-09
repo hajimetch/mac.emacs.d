@@ -21,10 +21,10 @@
 (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
 
 ;; Helm その他の設定
-(setq helm-scroll-amount 8
-      helm-split-window-inside-p t
-      helm-ff-search-library-in-sexp t
-      helm-ff-file-name-history-use-recentf t)
+(setq helm-scroll-amount 8)
+(setq helm-split-window-inside-p t)
+(setq helm-ff-search-library-in-sexp t)
+(setq helm-ff-file-name-history-use-recentf t)
 
 (helm-mode t)
 

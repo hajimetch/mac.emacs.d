@@ -49,49 +49,6 @@
 (set-coding-system-priority 'utf-8 'euc-jp 'iso-2022-jp 'cp932)
 
 
-;;; smartparens
-(require 'smartparens-config)
-
-;; prog-mode では常に smartparens-mode
-(add-hook 'prog-mode-hook #'smartparens-mode)
-
-
-;;; ediff
-(require 'ediff)
-
-;; コントロール用のバッファを同一フレーム内に表示
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;; diff のバッファを上下ではなく左右に並べる
-(setq ediff-split-window-function 'split-window-horizontally)
-
-
-;;; スクロール
-;; スクロール時のカーソル位置を維持
-(setq scroll-preserve-screen-position t)
-
-;; スクロール開始の残り行数
-(setq scroll-margin 0)
-
-;; スクロール時の行数
-(setq scroll-conservatively 10000)
-
-;; スクロール時の行数 (scroll-margin に影響せず)
-(setq scroll-step 0)
-
-;; 画面スクロール時の重複表示する行数
-(setq next-screen-context-lines 1)
-
-;; recenter-top-bottom のポジション
-(setq recenter-positions '(middle top bottom))
-
-;; 横スクロール開始の残り列数
-(setq hscroll-margin 1)
-
-;; 横スクロール時の列数
-(setq hscroll-step 1)
-
-
 ;;; 検索
 ;; 大文字・小文字を区別しないでサーチ
 (setq-default case-fold-search nil)
@@ -105,8 +62,7 @@
 ;; インクリメント検索時に縦スクロールを有効化
 (setq isearch-allow-scroll nil)
 
-
-;;; migemo
+;; migemo
 (require 'migemo)
 
 (setq migemo-command "cmigemo")
@@ -119,21 +75,8 @@
 (load-library "migemo")
 (migemo-init)
 
-
-;;; anzu
+;; anzu
 (global-anzu-mode t)
-
-
-;;; Company
-(require 'company)
-(require 'company-quickhelp)
-(global-company-mode t)
-(company-quickhelp-mode t)
-
-
-;;; which-key
-(which-key-setup-side-window-bottom)
-(which-key-mode t)
 
 
 ;;; バックアップ(xxx~)
@@ -210,10 +153,15 @@
    (my/with-suppressed-message (recentf-save-list))))
 
 
-;;; バッファ再読み込み関数
-(defun my/revert-buffer ()
-    "Revert buffer without confirmation."
-    (interactive) (revert-buffer t t))
+;;; undo 関連
+;; undohist
+(require 'undohist)
+(undohist-initialize)
+(setq undohist-ignored-files '("COMMIT_EDITMSG"))
+
+;; undo-tree
+(require 'undo-tree)
+(global-undo-tree-mode)
 
 
 ;;; abbrev file
@@ -223,15 +171,26 @@
 (setq save-abbrevs 'silently)
 
 
-;;; undohist
-(require 'undohist)
-(undohist-initialize)
-(setq undohist-ignored-files '("COMMIT_EDITMSG"))
+;;; ediff
+(require 'ediff)
+
+;; コントロール用のバッファを同一フレーム内に表示
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; diff のバッファを上下ではなく左右に並べる
+(setq ediff-split-window-function 'split-window-horizontally)
 
 
-;;; undo-tree
-(require 'undo-tree)
-(global-undo-tree-mode)
+;;; Company
+(require 'company)
+(require 'company-quickhelp)
+(global-company-mode t)
+(company-quickhelp-mode t)
+
+
+;;; which-key
+(which-key-setup-side-window-bottom)
+(which-key-mode t)
 
 
 ;;; howm
@@ -279,32 +238,10 @@
                             (buffer-substring-no-properties beg end))))))
 
 
-;;; Misc
-;; global-hungry-delete-mode
-(global-hungry-delete-mode t)
-
-;; 選択領域を削除キーで一括削除
-(delete-selection-mode t)
-
-;; 矩形選択可能にする
-(cua-mode t)
-(setq cua-enable-cua-keys nil)
-
-;; C-k で行末の改行も消去
-(setq kill-whole-line t)
-
-;; 読み取り専用バッファでもカットでコピー可能
-(setq kill-read-only-ok t)
-
+;;; その他
 ;; dired バッファを並べる
 (require 'dired)
 (setq dired-dwim-target t)
-
-;; TAB 無効化
-(setq-default indent-tabs-mode nil)
-
-;; TAB 幅を 4 に設定
-(setq-default tab-width 4)
 
 ;; Listing directory failed but access-file worked 対応
 (require 'ls-lisp)

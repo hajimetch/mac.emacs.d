@@ -27,10 +27,9 @@
 (global-linum-mode 0)                 ; 表示しない(パフォーマンス対策)
 
 
-;;; whitespace
-(require 'whitespace)
-
+;;; 空白文字
 ;; 空白を視覚化
+(require 'whitespace)
 (setq whitespace-style '(face           ; faceで可視化
                          tabs           ; タブ
                          trailing       ; 行末
@@ -65,6 +64,12 @@
 ;; デフォルトで視覚化を有効に
 (global-whitespace-mode t)
 
+;; タブ無効化
+(setq-default indent-tabs-mode nil)
+
+;; タブ幅を 4 に設定
+(setq-default tab-width 4)
+
 
 ;;; フォント
 (when window-system
@@ -74,16 +79,12 @@
   (set-face-attribute 'tooltip nil :family "Ricty Diminished Discord" :height 155))
 
 
-;;; ElScreen
-(require 'elscreen)
-(elscreen-start)
-
-
-;;; rainbow-delimiters
+;;; 括弧
+;; rainbow-delimiters
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
-;; 括弧の色を強調する設定
+;; 括弧の色を強調する
 (require 'cl-lib)
 (require 'color)
 
@@ -96,6 +97,12 @@
    (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
     (cl-callf color-saturate-name (face-foreground face) 30))))
 (add-hook 'emacs-startup-hook 'my/rainbow-delimiters-using-stronger-colors)
+
+;; smartparens
+(require 'smartparens-config)
+
+;; prog-mode では常に smartparens-mode
+(add-hook 'prog-mode-hook #'smartparens-mode)
 
 
 ;;; モードライン
@@ -213,8 +220,12 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 (setq uniquify-ignore-buffers-re "*[^*]+*")
 
+;; 非アクティブバッファの背景色を変える
+(require 'hiwin)
+(hiwin-activate)
+(set-face-background 'hiwin-face "gray10")
 
-;;; fill-column-indicator
+;; fill-column-indicator
 (require 'fill-column-indicator)
 (setq fci-rule-width 1)
 (setq fci-rule-color "dim gray")
@@ -222,8 +233,21 @@
   fci-mode (lambda () (fci-mode t)))
 (global-fci-mode t)
 
+;; バッファの終端を明示する
+(setq-default indicate-empty-lines t)
 
-;;; shackle
+;; バッファ再読み込み関数
+(defun my/revert-buffer ()
+    "Revert buffer without confirmation."
+    (interactive) (revert-buffer t t))
+
+
+;;; ウィンドウ
+;; ElScreen
+(require 'elscreen)
+(elscreen-start)
+
+;; shackle
 (require 'shackle)
 (setq shackle-rules
       '((compilation-mode :align below :ratio 0.3)
@@ -234,13 +258,56 @@
         ("*SKK annotation*" :align below :ratio 0.3)))
 (shackle-mode t)
 
-
-;;; rotete-window でカーソルを元のウィンドウに残す
+;; rotete-window でカーソルを元のウィンドウに残す
 (defadvice rotate-window (after rotate-cursor activate)
   (other-window 1))
 
 
-;;; Misc
+;;; スクロール
+;; スクロール時のカーソル位置を維持
+(setq scroll-preserve-screen-position t)
+
+;; スクロール開始の残り行数
+(setq scroll-margin 0)
+
+;; スクロール時の行数
+(setq scroll-conservatively 10000)
+
+;; スクロール時の行数 (scroll-margin に影響せず)
+(setq scroll-step 0)
+
+;; 画面スクロール時の重複表示する行数
+(setq next-screen-context-lines 1)
+
+;; recenter-top-bottom のポジション
+(setq recenter-positions '(middle top bottom))
+
+;; 横スクロール開始の残り列数
+(setq hscroll-margin 1)
+
+;; 横スクロール時の列数
+(setq hscroll-step 1)
+
+
+;;; 選択領域・カット
+;; global-hungry-delete-mode
+(global-hungry-delete-mode t)
+
+;; 選択領域を削除キーで一括削除
+(delete-selection-mode t)
+
+;; 矩形選択可能にする
+(cua-mode t)
+(setq cua-enable-cua-keys nil)
+
+;; C-k で行末の改行も消去
+(setq kill-whole-line t)
+
+;; 読み取り専用バッファでもカットでコピー可能
+(setq kill-read-only-ok t)
+
+
+;;; その他
 ;; アラートのビープ音を消す
 (setq ring-bell-function 'ignore)
 
