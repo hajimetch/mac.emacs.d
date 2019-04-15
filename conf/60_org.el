@@ -7,6 +7,9 @@
 ;; インデントモードにする
 (setq org-startup-indented t)
 
+;; インデントの幅を設定
+(setq org-indent-indentation-per-level 1)
+
 ;; org-mode での強調表示を可能に
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 

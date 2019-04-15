@@ -220,11 +220,6 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 (setq uniquify-ignore-buffers-re "*[^*]+*")
 
-;; 非アクティブバッファの背景色を変える
-(require 'hiwin)
-(hiwin-activate)
-(set-face-background 'hiwin-face "gray10")
-
 ;; fill-column-indicator
 (require 'fill-column-indicator)
 (setq fci-rule-width 1)
