@@ -32,8 +32,8 @@
 (bind-key "C-c m"          'helm-man-woman)
 (bind-key "C-c y"          'helm-yas-complete)
 (bind-key "C-c C-SPC"      'helm-all-mark-rings)
-(bind-key "C-S-y"          'helm-show-kill-ring)
 (bind-key "C-c <f1>"       'helm-info)
+(bind-key "C-M-y"          'helm-show-kill-ring)
 (bind-key "<M-f1>"         'helm-apropos)
 (bind-key* "M-m"           'helm-migemo-mode helm-map)
 (bind-keys :map helm-map
@@ -55,6 +55,8 @@
 (bind-key "C-c l"          'org-store-link)
 (bind-key "C-c ("          'org-clock-in)
 (bind-key "C-c )"          'org-clock-out)
+(bind-key "C-M--"          'org-agenda-list)
+(bind-key "C-M-="          'my/org-capture)
 
 
 ;;; python-mode
@@ -104,6 +106,7 @@
 
 ;;; Company
 (bind-key "TAB"            'company-complete)
+(bind-key "M-/"            'company-dabbrev)
 (bind-keys :map company-active-map
            ("C-d" .        company-filter-candidates)
            ("C-n" .        company-select-next)

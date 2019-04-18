@@ -22,9 +22,6 @@
 ;; org-default-notes-file のファイル名
 (setq org-default-notes-file "~/Dropbox/Emacs/org/default.org")
 
-;; アジェンダ表示の対象ファイル
-(setq org-agenda-files (list org-directory))
-
 ;; TODO 状態
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WAIT(w)" "NOTE(n)" "|" "DONE(d)" "SOMEDAY(s)" "CANCEL(c)")))
@@ -56,6 +53,20 @@
         ("N" "Note with Clipboard" entry
          (file+headline "~/Dropbox/Emacs/org/note.org" "Note")
          "* %?\n%U\n%c" :empty-lines 1)))
+
+;; カーソル位置に Task entry を追加
+(defun my/org-capture ()
+  "Insert an org-capture Task entry at point."
+  (interactive)
+  (org-capture 0 "t"))
+
+
+;;; org-agenda
+;; 対象ファイル
+(setq org-agenda-files (list org-directory))
+
+;; 始めから Log mode
+(setq org-agenda-start-with-log-mode '(closed clock))
 
 
 ;;; open-junk-file
