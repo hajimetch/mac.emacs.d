@@ -55,8 +55,8 @@
 (bind-key "C-c l"          'org-store-link)
 (bind-key "C-c ("          'org-clock-in)
 (bind-key "C-c )"          'org-clock-out)
-(bind-key "C-M--"          'org-agenda-list)
-(bind-key "C-M-="          'my/org-capture)
+(bind-key "C-M-="          'my/org-capture-task)
+(bind-key "C-M--"          'my/org-capture-memo)
 
 
 ;;; python-mode
@@ -158,7 +158,7 @@
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
 (bind-key "C-c t"          'my/eshell-pop)      ; eshellを開く
-(bind-key "C-c C-c"        'my/howm-save-buffer-and-kill) ; メモ自動保存
+(bind-key "C-c C-c"        'my/howm-save-buffer-and-kill howm-mode-map) ; メモを自動保存
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
 (bind-key "C-c ,,"         'howm-menu semantic-mode-map) ; 重複を回避

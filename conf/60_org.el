@@ -52,13 +52,25 @@
          "* %?\n%U" :empty-lines 1)
         ("N" "Note with Clipboard" entry
          (file+headline "~/Dropbox/Emacs/org/note.org" "Note")
-         "* %?\n%U\n%c" :empty-lines 1)))
+         "* %?\n%U\n%c" :empty-lines 1)
+        ("m" "Memo" entry
+         (file+headline "~/Dropbox/Emacs/org/note.org" "Memo")
+         "* TODO %?" :empty-lines 0)
+        ("M" "Memo with Clipboard(Title)" entry
+         (file+headline "~/Dropbox/Emacs/org/note.org" "Memo")
+         "* TODO %U%?" :empty-lines 0)))
 
 ;; カーソル位置に Task entry を追加
-(defun my/org-capture ()
+(defun my/org-capture-task ()
   "Insert an org-capture Task entry at point."
   (interactive)
   (org-capture 0 "t"))
+
+;; 備忘録を追加
+(defun my/org-capture-memo ()
+  "Insert an org-capture Memo entry at point."
+  (interactive)
+  (org-capture nil "m"))
 
 
 ;;; org-agenda

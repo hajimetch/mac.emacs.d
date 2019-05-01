@@ -20,5 +20,6 @@
         org-agenda-archive-default-with-confirmation
         org-cycle-agenda-files
         read-only-mode
+        skk-undo
         tabbar-backward-tab
         ))

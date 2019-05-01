@@ -20,6 +20,22 @@
 (flycheck-pos-tip-mode t)
 
 
+;;; semantic-mode
+(semantic-mode t)
+
+
+;;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ctp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+
+
 ;;; js2-mode
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -30,5 +46,5 @@
 (setq markdown-command "pandoc -s --self-contained -t html5 -c ~/.pandoc/github.css --quiet")
 
 
-;;; semantic-mode
-(semantic-mode t)
+;;; php-mode
+(setq php-manual-url 'ja)
