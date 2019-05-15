@@ -68,7 +68,7 @@
 (setq projectile-git-command "fd . -0")
 (setq projectile-generic-command "fd . -0")
 
-;; helm-projectile-ag が ripgrep で機能しない問題を回避
+;; helm-projectile-ag が ripgrep で動作しない問題を回避
 (defun helm-projectile-ag (&optional options)
   "Helm version of projectile-ag."
   (interactive (if current-prefix-arg (list (read-string "option: " "" 'helm-ag--extra-options-history))))

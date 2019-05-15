@@ -43,6 +43,15 @@
            ("<f1>" .       helm-help))
 
 
+;;; helm-gtags
+(bind-key "C-. C-."        'helm-gtags-find-tag-from-here)
+(bind-key "C-. C-,"        'helm-gtags-pop-stack)
+(bind-key "C-. t"          'helm-gtags-find-tag)
+(bind-key "C-. r"          'helm-gtags-find-rtag)
+(bind-key "C-. s"          'helm-gtags-find-symbol)
+(bind-key "C-. f"          'helm-gtags-find-files)
+
+
 ;;; Projectile
 (bind-keys :map projectile-mode-map
            ("C-q" .        projectile-command-map))

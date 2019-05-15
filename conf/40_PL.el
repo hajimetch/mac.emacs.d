@@ -48,3 +48,8 @@
 
 ;;; php-mode
 (setq php-manual-url 'ja)
+
+
+;;; gtags
+(setenv "GTAGSLABEL" "pygments")
+(setq helm-gtags-auto-update t)
