@@ -1,4 +1,5 @@
 ;;; path
+(require 'cl-lib)
 (require 'exec-path-from-shell)
 (setq exec-path-from-shell-check-startup-files nil)
 (when window-system
@@ -36,6 +37,9 @@
 
 ;; キーボード入力の文字コード
 (set-keyboard-coding-system 'utf-8-unix)
+
+;; ターミナルの文字コード
+(set-terminal-coding-system 'utf-8-unix)
 
 ;; システムメッセージの文字コード
 (setq locale-coding-system 'utf-8-unix)
