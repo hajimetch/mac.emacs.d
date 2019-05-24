@@ -16,14 +16,13 @@
            ("<down>" .     my/skk-next-candidate)
            ("<up>" .       my/skk-previous-candidate)
            ("C-M-," .      skk-toggle-kutouten)
-           ("<S-return>" . skk-undo-kakutei))
-(bind-key "C-j" 'skk-kakutei minibuffer-local-map)
+           ("C-S-j" .      skk-undo-kakutei))
 
 
 ;;; Helm
 (bind-key "M-x"            'helm-M-x)
 (bind-key "C-x C-f"        'helm-find-files)
-(bind-key "C-x C-p"        'helm-projectile)
+(bind-key "C-x C-l"        'helm-elscreen)
 (bind-key "C-x C-x"        'helm-mini)
 (bind-key "C-x C-z"        'helm-resume)
 (bind-key "C-c g"          'helm-do-ag)
@@ -43,13 +42,9 @@
            ("<f1>" .       helm-help))
 
 
-;;; helm-gtags
-(bind-key* "C-c . ."       'helm-gtags-find-tag-from-here)
-(bind-key* "C-c . ,"       'helm-gtags-pop-stack)
-(bind-key* "C-c . t"       'helm-gtags-find-tag)
-(bind-key* "C-c . r"       'helm-gtags-find-rtag)
-(bind-key* "C-c . s"       'helm-gtags-find-symbol)
-(bind-key* "C-c . f"       'helm-gtags-find-files)
+;;; projectile
+(bind-key "C-x C-p"        'helm-projectile)
+(bind-key "C-c C-p"        'projectile-command-map)
 
 
 ;;; org-mode
@@ -57,10 +52,11 @@
 (bind-key "C-c c"          'org-capture)
 (bind-key "C-c o"          'org-switchb)
 (bind-key "C-c l"          'org-store-link)
-(bind-key "C-c ("          'org-clock-in)
-(bind-key "C-c )"          'org-clock-out)
 (bind-key "C-M-="          'my/org-capture-task)
 (bind-key "C-M--"          'my/org-capture-memo)
+(bind-keys :map org-mode-map
+           ("C-c (" .      org-clock-in)
+           ("C-c )" .      org-clock-out))
 
 
 ;;; howm
@@ -69,15 +65,35 @@
            ("C-c C-k" .    my/howm-kill-buffer))
 
 
-;;; python-mode
+;;; PL
 (bind-key "C-c q"          'quickrun)
-(bind-keys :map python-mode-map
-           ("TAB" .        company-complete)
-           ("C-c C-d" .    flycheck-list-errors)
-           ("C-c C-f" .    py-yapf-buffer)
-           ("C-c C-n" .    flycheck-next-error)
-           ("C-c C-p" .    flycheck-previous-error)
-           ("C-c C-r" .    helm-jedi-related-names))
+(bind-key "C-c p"          'previous-error)
+(bind-key "C-c n"          'next-error)
+
+
+;;; helm-gtags-mode
+(setq helm-gtags-mode-hook
+      '(lambda ()
+         (bind-keys :map helm-gtags-mode-map
+                    ("C-c . ." . helm-gtags-find-tag-from-here)
+                    ("C-c . ," . helm-gtags-pop-stack)
+                    ("C-c . t" . helm-gtags-find-tag)
+                    ("C-c . r" . helm-gtags-find-rtag)
+                    ("C-c . s" . helm-gtags-find-symbol)
+                    ("C-c . f" . helm-gtags-find-files))))
+
+
+;;; flycheck-mode
+(bind-key "C-c C-d"        'flycheck-list-errors flycheck-mode-map)
+
+
+;;; python-mode
+(bind-key "C-c C-f"        'py-yapf-buffer python-mode-map)
+
+
+;;; git-gutter
+(bind-key "C-x p"          'git-gutter:previous-hunk)
+(bind-key "C-x n"          'git-gutter:next-hunk)
 
 
 ;;; multiple-cursor
@@ -145,7 +161,6 @@
 ;;; ElScreen
 (bind-key "<f12>"          'elscreen-next)
 (bind-key "<f11>"          'elscreen-previous)
-(bind-key "C-z h"          'helm-elscreen)
 (if window-system
     (bind-key "C-z"        'iconify-or-deiconify-frame elscreen-map)
   (bind-key "C-z"          'suspend-emacs elscreen-map))
@@ -157,21 +172,20 @@
 
 
 ;;; Other key bindings
-(define-key key-translation-map (kbd "C-h") (kbd "DEL")) ; C-hでバックスペース
+(bind-key "C-h" (kbd "DEL") key-translation-map) ; C-hでバックスペース
 (bind-key "C-m"            'newline-and-indent) ; 改行時自動インデント
 (bind-key "C-x g"          'magit-status)       ; magitステータス
 (bind-key "C-x k"          'kill-this-buffer)   ; バッファを閉じる
 (bind-key "M-k"            'kill-this-buffer)   ; バッファを閉じる
 (bind-key "C-c d"          'my/dictionary)      ; 辞書参照
 (bind-key "C-c j"          'open-junk-file)     ; junk-file作成
-(bind-key "C-c p"          'ps-print-region)    ; PDF作成
 (bind-key "C-c r"          'my/revert-buffer)   ; バッファ更新
 (bind-key "C-c s"          'whitespace-cleanup) ; 不要な空白を削除
 (bind-key "C-c t"          'my/eshell-pop)      ; eshellを開く
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
-(bind-key "C-c ,,"         'howm-menu semantic-mode-map) ; 重複を回避
 (bind-key "C-t"            'other-window dired-mode-map) ; 重複を回避
+(bind-key "M-p"            'ps-print-region)             ; PDF作成
 (bind-key "<backtab>"      '(lambda() (interactive) (insert "	")))
                                         ; インデント
 (bind-key "<f1>"           'help-for-help) ; ヘルプ参照

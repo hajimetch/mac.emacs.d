@@ -37,7 +37,6 @@
 
 
 ;;; js2-mode
-(add-hook 'after-init-hook #'global-flycheck-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 
@@ -53,3 +52,9 @@
 ;;; gtags
 (setenv "GTAGSLABEL" "pygments")
 (setq helm-gtags-auto-update t)
+(add-hook 'python-mode-hook 'helm-gtags-mode)
+(add-hook 'emacs-lisp-mode-hook 'helm-gtags-mode)
+
+
+;;; git-gutter
+(global-git-gutter-mode t)
