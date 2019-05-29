@@ -16,7 +16,7 @@
            ("<down>" .     my/skk-next-candidate)
            ("<up>" .       my/skk-previous-candidate)
            ("C-M-," .      skk-toggle-kutouten)
-           ("C-S-j" .      skk-undo-kakutei))
+           ("<S-return>" . skk-undo-kakutei))
 
 
 ;;; Helm
