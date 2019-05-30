@@ -3,48 +3,10 @@
 (when window-system
   (setq mac-command-modifier 'meta))
 
-
-;;; ddskk
-(bind-key "C-S-j"          'ignore)
-(bind-key "C-:"            'ignore)
-(bind-key "C-x C-j"        'skk-mode)
-(bind-key "C-x j"          'skk-auto-fill-mode)
-(bind-keys :map skk-j-mode-map
-           ("S-SPC" .      skk-previous-candidate)
-           ("C-n" .        my/skk-next-candidate)
-           ("C-p" .        my/skk-previous-candidate)
-           ("<down>" .     my/skk-next-candidate)
-           ("<up>" .       my/skk-previous-candidate)
-           ("C-M-," .      skk-toggle-kutouten)
-           ("<S-return>" . skk-undo-kakutei))
-
-
 ;;; Helm
-(bind-key "M-x"            'helm-M-x)
-(bind-key "C-x C-f"        'helm-find-files)
-(bind-key "C-x C-l"        'helm-elscreen)
-(bind-key "C-x C-x"        'helm-mini)
-(bind-key "C-x C-z"        'helm-resume)
-(bind-key "C-c g"          'helm-do-ag)
-(bind-key "C-c i"          'helm-semantic-or-imenu)
-(bind-key "C-c k"          'helm-descbinds)
-(bind-key "C-c m"          'helm-man-woman)
-(bind-key "C-c y"          'helm-yas-complete)
-(bind-key "C-c C-SPC"      'helm-all-mark-rings)
-(bind-key "C-c <f1>"       'helm-info)
-(bind-key "C-M-y"          'helm-show-kill-ring)
-(bind-key "<M-f1>"         'my/helm-for-document)
-(bind-key* "M-m"           'helm-migemo-mode helm-map)
-(bind-keys :map helm-map
-           ("TAB" .        helm-execute-persistent-action)
-           ("C-z" .        helm-select-action)
-           ("M-b" .        my/helm-ff-run-browse-project)
-           ("<f1>" .       helm-help))
 
 
 ;;; projectile
-(bind-key "C-x C-p"        'helm-projectile)
-(bind-key "C-c C-p"        'projectile-command-map)
 
 
 ;;; org-mode
@@ -84,11 +46,9 @@
 
 
 ;;; flycheck-mode
-(bind-key "C-c C-d"        'flycheck-list-errors flycheck-mode-map)
 
 
 ;;; python-mode
-(bind-key "C-c C-f"        'py-yapf-buffer python-mode-map)
 
 
 ;;; git-gutter

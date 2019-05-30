@@ -36,38 +36,36 @@
 ;;; 空白文字
 ;; 空白を視覚化
 (use-package whitespace
+  :custom
+  (whitespace-style '(face              ; faceで可視化
+                      tabs              ; タブ
+                      trailing          ; 行末
+                      spaces            ; スペース
+                      empty             ; 先頭/末尾の空行
+                      space-mark        ; 表示のマッピング(space)
+                      tab-mark          ; 表示のマッピング(tab)
+                      ))
+  (whitespace-space-regexp "\\(\x3000+\\)") ; 　と	を強調表示
+  (whitespace-display-mappings
+   '((space-mark ?\x3000 [?\□])
+     (tab-mark ?\t [?\xBB ?\t]) ))
   :config
-  (setq whitespace-style '(face         ; faceで可視化
-                           tabs         ; タブ
-                           trailing     ; 行末
-                           spaces       ; スペース
-                           empty        ; 先頭/末尾の空行
-                           space-mark   ; 表示のマッピング(space)
-                           tab-mark     ; 表示のマッピング(tab)
-                           ))
-
-  ;; 全角スペースとタブを目立たせる
-  (setq whitespace-space-regexp "\\(\x3000+\\)")
-  (setq whitespace-display-mappings
-        '((space-mark ?\x3000 [?\□])
-          (tab-mark ?\t [?\xBB ?\t]) ))
-
-  ;; 色設定
-  (defvar my/fg-color "red1")
-  (defvar my/bg-color "red4")
+  (defvar my/whitespace-fg "red1")      ; 色設定
+  (defvar my/whitespace-bg "red4")
+  (defvar my/default-fg (face-attribute 'default :foreground))
+  (defvar my/default-bg (face-attribute 'default :background))
   (set-face-attribute 'whitespace-trailing nil
-                      :foreground (face-attribute 'default :foreground)
-                      :background my/bg-color)
+                      :foreground my/default-fg
+                      :background my/whitespace-bg)
   (set-face-attribute 'whitespace-tab nil
-                      :foreground my/fg-color
-                      :background (face-attribute 'default :background))
+                      :foreground my/whitespace-fg
+                      :background my/default-bg)
   (set-face-attribute 'whitespace-space nil
-                      :foreground my/fg-color
-                      :background (face-attribute 'default :background))
+                      :foreground my/whitespace-fg
+                      :background my/default-bg)
   (set-face-attribute 'whitespace-empty nil
-                      :foreground (face-attribute 'default :foreground)
-                      :background my/bg-color)
-
+                      :foreground my/default-fg
+                      :background my/whitespace-bg)
   (global-whitespace-mode t))
 
 ;; タブ
@@ -164,20 +162,20 @@
 ;;; ハイライト
 ;; カーソル行ハイライト
 (use-package hl-line
+  :custom
+  (global-hl-line-timer
+   (run-with-idle-timer 0.03 t 'my/global-hl-line-timer-function))
   :config
   ;; ハイライトを無効にするメジャーモードの指定
   (defvar my/global-hl-line-timer-exclude-modes '(todotxt-mode)
     "Major mode for disabling hl-line.")
-
   ;; ハイライトに0.03秒の猶予を与える(パフォーマンス対策)
   (defun my/global-hl-line-timer-function ()
     "Function used to smooth cursor movement."
     (unless (memq major-mode my/global-hl-line-timer-exclude-modes)
       (global-hl-line-unhighlight-all)
       (let ((global-hl-line-mode t))
-        (global-hl-line-highlight))))
-  (setq global-hl-line-timer
-        (run-with-idle-timer 0.03 t 'my/global-hl-line-timer-function)))
+        (global-hl-line-highlight)))))
 
 ;; ハイライトで視覚的フィードバック
 (use-package volatile-highlights
@@ -204,16 +202,17 @@
 ;;; バッファ
 ;; 同一バッファ名にディレクトリ付与
 (use-package uniquify
-  :config
-  (setq uniquify-buffer-name-style 'forward)
-  (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-  (setq uniquify-ignore-buffers-re "*[^*]+*"))
+  :custom
+  (uniquify-buffer-name-style 'forward)
+  (uniquify-buffer-name-style 'post-forward-angle-brackets)
+  (uniquify-ignore-buffers-re "*[^*]+*"))
 
 ;; 行の文字数の目印を付ける
 (use-package fill-column-indicator
+  :custom
+  (fci-rule-width 1)
+  (fci-rule-color "dim gray")
   :config
-  (setq fci-rule-width 1)
-  (setq fci-rule-color "dim gray")
   (define-globalized-minor-mode global-fci-mode
     fci-mode (lambda () (fci-mode t)))
   (global-fci-mode t))
@@ -230,20 +229,19 @@
 ;;; ウィンドウ
 ;; ElScreen
 (use-package elscreen
-  :config
-  (elscreen-start))
+  :config (elscreen-start))
 
 ;; shackle
 (use-package shackle
-  :config
-  (setq shackle-rules
-        '((compilation-mode :align below :ratio 0.3)
-          ("*Completions*" :align below :ratio 0.3)
-          ("*Help*" :align below :ratio 0.4)
-          ("*eshell*" :align below :ratio 0.4 :popup t)
-          ("*候補*" :align below :ratio 0.3)
-          ("*SKK annotation*" :align below :ratio 0.3)))
-  (shackle-mode t))
+  :custom
+  (shackle-rules
+   '((compilation-mode :align below :ratio 0.3)
+     ("*Completions*" :align below :ratio 0.3)
+     ("*Help*" :align below :ratio 0.4)
+     ("*eshell*" :align below :ratio 0.4 :popup t)
+     ("*候補*" :align below :ratio 0.3)
+     ("*SKK annotation*" :align below :ratio 0.3)))
+  :config (shackle-mode t))
 
 ;; rotete-window でカーソルを元のウィンドウに残す
 (defadvice rotate-window (after rotate-cursor activate)
@@ -266,7 +264,7 @@
 (setq kill-whole-line t)        ; C-k で行末の改行も削除
 (setq kill-read-only-ok t)      ; 読み取り専用バッファもカットでコピー
 
-;; 矩形選択有効化
+;; 矩形選択
 (cua-mode t)
 (setq cua-enable-cua-keys nil)
 

@@ -6,6 +6,7 @@
         howm-find-today
         hungry-delete-backward
         keyboard-escape-quit
+        skk-insert
         ))
 
 (setq mc/cmds-to-run-once

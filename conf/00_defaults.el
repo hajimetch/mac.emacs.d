@@ -5,9 +5,8 @@
 ;;; Path
 (use-package exec-path-from-shell
   :if window-system
-  :config
-  (setq exec-path-from-shell-check-startup-files nil)
-  (exec-path-from-shell-initialize))
+  :custom (exec-path-from-shell-check-startup-files nil)
+  :config (exec-path-from-shell-initialize))
 
 
 ;;; Desktop
@@ -59,11 +58,12 @@
 
 ;; migemo
 (use-package migemo
+  :custom
+  (migemo-command "cmigemo")
+  (migemo-options '("-q" "--emacs"))
+  (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (migemo-coding-system 'utf-8-unix)
   :config
-  (setq migemo-command "cmigemo")
-  (setq migemo-options '("-q" "--emacs"))
-  (setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-  (setq migemo-coding-system 'utf-8-unix)
   (defvar migemo-user-dictionary nil)
   (defvar migemo-regex-dictionary nil)
   (load-library "migemo")
@@ -71,8 +71,7 @@
 
 ;; anzu
 (use-package anzu
-  :config
-  (global-anzu-mode t))
+  :config (global-anzu-mode t))
 
 
 ;;; バックアップ(xxx~)
@@ -151,14 +150,12 @@
 ;;; undo 関連
 ;; undohist
 (use-package undohist
-  :config
-  (undohist-initialize)
-  (setq undohist-ignored-files '("COMMIT_EDITMSG")))
+  :custom (undohist-ignored-files '("COMMIT_EDITMSG"))
+  :config (undohist-initialize))
 
 ;; undo-tree
 (use-package undo-tree
-  :config
-  (global-undo-tree-mode t))
+  :config (global-undo-tree-mode t))
 
 
 ;;; abbrev file
@@ -179,13 +176,12 @@
 ;;; Company 関連
 ;; company
 (use-package company
-  :config
-  (global-company-mode t))
+  :config (global-company-mode t))
 
 ;; company-quickhelp
 (use-package company-quickhelp
-  :config
-  (company-quickhelp-mode t))
+  :after company
+  :config (company-quickhelp-mode t))
 
 
 ;;; which-key
@@ -200,17 +196,13 @@
   :init
   (setq howm-view-title-header "*")
   (setq howm-prefix (kbd "C-x ,"))
+  :custom
+  (howm-directory "~/Dropbox/Emacs/howm/") ; ファイルパス
+  (howm-keyword-file (concat howm-directory ".howm-keys"))
+  (howm-history-file (concat howm-directory ".howm-history"))
+  (howm-menu-file (concat howm-directory "menu.txt"))
+  (howm-menu-lang 'ja)                  ; home-menu の言語
   :config
-
-  ;; ファイルパス
-  (setq howm-directory "~/Dropbox/Emacs/howm/")
-  (setq howm-keyword-file (concat howm-directory ".howm-keys"))
-  (setq howm-history-file (concat howm-directory ".howm-history"))
-  (setq howm-menu-file (concat howm-directory "menu.txt"))
-
-  ;; howm-menu の言語を日本語に
-  (setq howm-menu-lang 'ja)
-
   ;; メモを保存と同時に閉じる
   (defun my/howm-save-buffer-and-kill()
     "Save howm buffer and exit."
@@ -219,7 +211,6 @@
                (howm-buffer-p))
       (save-buffer)
       (kill-buffer nil)))
-
   ;; メモを保存せずに閉じる
   (defun my/howm-kill-buffer()
     "Save howm buffer and exit."
@@ -262,13 +253,11 @@
 
 ;; Error 対応 (Emacs' unknown and untrusted authority TLS error)
 (use-package gnutls
-  :config
-  (add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem"))
+  :config (add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem"))
 
 ;; Error 対応 (insert-directory: Listing directory failed but `access-file' worked)
 (use-package ls-lisp
-  :config
-  (setq ls-lisp-use-insert-directory-program nil))
+  :custom (ls-lisp-use-insert-directory-program nil))
 
 ;; Error 対応 (ad-handle-definition: `tramp-read-passwd' got redefined)
 (setq ad-redefinition-action 'accept)
