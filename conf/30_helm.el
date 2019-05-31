@@ -7,6 +7,7 @@
    ("C-x C-z"       . helm-resume)
    ("C-c i"         . helm-semantic-or-imenu)
    ("C-c m"         . helm-man-woman)
+   ("C-c w"         . helm-google-suggest)
    ("C-c C-SPC"     . helm-all-mark-rings)
    ("C-c <f1>"      . helm-info)
    ("C-M-y"         . helm-show-kill-ring)
@@ -58,6 +59,11 @@
 ;;; helm-swoop
 (use-package helm-swoop
   :after helm
+  :bind
+  (("M-s"           . helm-swoop)
+   :map helm-swoop-map
+   ("C-s"           . helm-next-line)
+   ("C-r"           . helm-previous-line))
   :custom (helm-swoop-move-to-line-cycle nil) ; リストを循環しない
   )
 

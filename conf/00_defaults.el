@@ -58,6 +58,7 @@
 
 ;; migemo
 (use-package migemo
+  :if (executable-find "cmigemo")
   :custom
   (migemo-command "cmigemo")
   (migemo-options '("-q" "--emacs"))
@@ -157,25 +158,26 @@
 (use-package undo-tree
   :config (global-undo-tree-mode t))
 
-
-;;; abbrev file
-(setq abbrev-file-name "~/Dropbox/Emacs/abbrev_defs")
-(setq save-abbrevs t)
-(quietly-read-abbrev-file)
-(setq save-abbrevs 'silently)
-
-
-;;; ediff
-;; コントロール用のバッファを同一フレーム内に表示
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;; diff のバッファを上下ではなく左右に並べる
-(setq ediff-split-window-function 'split-window-horizontally)
+;; point-undo
+(use-package point-undo
+  :bind
+  ("M-["            . point-undo)
+  ("M-]"            . point-redo))
 
 
-;;; Company 関連
+;;; company
 ;; company
 (use-package company
+  :bind
+  (("TAB"            . company-complete)
+   ("M-/"            . company-dabbrev)
+   :map company-active-map
+   ("C-d"            . company-filter-candidates)
+   ("C-n"            . company-select-next)
+   ("C-p"            . company-select-previous)
+   :map company-search-map
+   ("C-n"            . company-select-next)
+   ("C-p"            . company-select-previous))
   :config (global-company-mode t))
 
 ;; company-quickhelp
@@ -191,33 +193,35 @@
   (which-key-mode t))
 
 
-;;; howm
-(use-package howm
-  :init
-  (setq howm-view-title-header "*")
-  (setq howm-prefix (kbd "C-x ,"))
-  :custom
-  (howm-directory "~/Dropbox/Emacs/howm/") ; ファイルパス
-  (howm-keyword-file (concat howm-directory ".howm-keys"))
-  (howm-history-file (concat howm-directory ".howm-history"))
-  (howm-menu-file (concat howm-directory "menu.txt"))
-  (howm-menu-lang 'ja)                  ; home-menu の言語
-  :config
-  ;; メモを保存と同時に閉じる
-  (defun my/howm-save-buffer-and-kill()
-    "Save howm buffer and exit."
-    (interactive)
-    (when (and (buffer-file-name)
-               (howm-buffer-p))
-      (save-buffer)
-      (kill-buffer nil)))
-  ;; メモを保存せずに閉じる
-  (defun my/howm-kill-buffer()
-    "Save howm buffer and exit."
-    (interactive)
-    (when (and (buffer-file-name)
-               (howm-buffer-p))
-      (kill-buffer nil))))
+;;; multiple-cursor
+(use-package multiple-cursor
+  :bind
+  (("C->"           . mc/mark-next-like-this)
+   ("C-<"           . mc/mark-previous-like-this)
+   ("C-c e"         . mc/edit-lines)
+   ("C-c h"         . mc/mark-all-like-this)))
+
+
+;;; expand-region
+(use-package expand-region
+  :bind
+  ("C-="            . er/expand-region)
+  ("C--"            . er/contract-region))
+
+
+;;; ediff
+;; コントロール用のバッファを同一フレーム内に表示
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; diff のバッファを上下ではなく左右に並べる
+(setq ediff-split-window-function 'split-window-horizontally)
+
+
+;;; abbrev file
+(setq abbrev-file-name "~/Dropbox/Emacs/abbrev_defs")
+(setq save-abbrevs t)
+(quietly-read-abbrev-file)
+(setq save-abbrevs 'silently)
 
 
 ;;; Mac 標準辞書アプリと連携

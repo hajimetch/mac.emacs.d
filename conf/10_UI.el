@@ -36,6 +36,7 @@
 ;;; 空白文字
 ;; 空白を視覚化
 (use-package whitespace
+  :bind ("C-c s"    . whitespace-cleanup)
   :custom
   (whitespace-style '(face              ; faceで可視化
                       tabs              ; タブ
@@ -45,7 +46,7 @@
                       space-mark        ; 表示のマッピング(space)
                       tab-mark          ; 表示のマッピング(tab)
                       ))
-  (whitespace-space-regexp "\\(\x3000+\\)") ; 　と	を強調表示
+  (whitespace-space-regexp "\\(\x3000+\\)") ; "　"と"	"を強調表示
   (whitespace-display-mappings
    '((space-mark ?\x3000 [?\□])
      (tab-mark ?\t [?\xBB ?\t]) ))
@@ -196,7 +197,6 @@
 (setq-default cursor-in-non-selected-windows t) ; 非アクティブでもカーソル表示
 (setq-default cursor-type '(bar . 2))           ; カーソルの形状
 (blink-cursor-mode 0)                           ; カーソルを点滅しない
-(use-package point-undo)                        ; カーソル位置のアンドゥ
 
 
 ;;; バッファ
@@ -229,7 +229,15 @@
 ;;; ウィンドウ
 ;; ElScreen
 (use-package elscreen
-  :config (elscreen-start))
+  :defer nil
+  :bind
+  ("<f12>"          . elscreen-next)
+  ("<f11>"          . elscreen-previous)
+  :config
+  (elscreen-start)
+  (if window-system
+    (bind-key "C-z" 'iconify-or-deiconify-frame elscreen-map)
+  (bind-key "C-z" 'suspend-emacs elscreen-map)))
 
 ;; shackle
 (use-package shackle
@@ -237,15 +245,19 @@
   (shackle-rules
    '((compilation-mode :align below :ratio 0.3)
      ("*Completions*" :align below :ratio 0.3)
-     ("*Help*" :align below :ratio 0.4)
+     ("*Help*" :align below :ratio 0.4 :select t)
      ("*eshell*" :align below :ratio 0.4 :popup t)
      ("*候補*" :align below :ratio 0.3)
      ("*SKK annotation*" :align below :ratio 0.3)))
   :config (shackle-mode t))
 
-;; rotete-window でカーソルを元のウィンドウに残す
-(defadvice rotate-window (after rotate-cursor activate)
-  (other-window 1))
+;; rotete-window
+(use-package rotate
+  :bind
+  ("M-t"            . rotate-window)
+  :config
+  (defadvice rotate-window              ; カーソルを元のウィンドウに残す
+      (after rotate-cursor activate) (other-window 1)))
 
 
 ;;; スクロール

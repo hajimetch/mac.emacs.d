@@ -13,9 +13,10 @@
    ("C-M-,"         . skk-toggle-kutouten)
    ("<S-return>"    . skk-undo-kakutei))
 
-  :hook ((focus-in . my/eisuu-key)
-         (isearch-mode . skk-isearch-mode-setup)
-         (isearch-mode-end . skk-isearch-mode-cleanup))
+  :hook
+  ((focus-in . my/eisuu-key)
+   (isearch-mode . skk-isearch-mode-setup)
+   (isearch-mode-end . skk-isearch-mode-cleanup))
 
   :commands (skk-wrap-newline-command)
 
@@ -30,9 +31,10 @@
   (skk-server-portnum 55100)              ; ポートはgoogle-ime-skk
   (skk-share-private-jisyo t)             ; 複数 skk 辞書を共有
   ;; 候補表示
-  (skk-show-inline t)                             ; インライン表示
-  (skk-show-annotation nil)                       ; 注釈は非表示
-  (skk-inline-show-face 'skk-henkan-face-default) ; フェイス
+  (skk-show-inline t)                   ; インライン表示
+  (skk-show-annotation nil)             ; 注釈は非表示
+  (skk-inline-show-face                 ; フェイス
+   'skk-henkan-face-default)
   ;; 動的候補表示
   (skk-dcomp-activate t)                ; 動的補完を行う
   (skk-dcomp-multiple-activate t)       ; 動的補完の複数候補表示

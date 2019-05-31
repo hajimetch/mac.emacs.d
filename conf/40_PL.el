@@ -12,8 +12,9 @@
   :custom
   (jedi:complete-on-dot t)
   (jedi:use-shortcuts t)
-  :config (add-to-list 'company-backends 'company-jedi)
-  )
+  :config
+  (add-to-list 'company-backends 'company-jedi)
+  (unbind-key "C-c ." jedi-mode-map))
 
 
 ;;; flycheck
@@ -63,14 +64,38 @@
 
 ;;; gtags
 (use-package helm-gtags
-  :after gtags
+  :after helm
+  :bind
+  (:map helm-gtags-mode-map
+        ("C-c . ." . helm-gtags-find-tag-from-here)
+        ("C-c . ," . helm-gtags-pop-stack)
+        ("C-c . t" . helm-gtags-find-tag)
+        ("C-c . r" . helm-gtags-find-rtag)
+        ("C-c . s" . helm-gtags-find-symbol)
+        ("C-c . f" . helm-gtags-find-files))
   :hook
   ((python-mode     . helm-gtags-mode)
    (emacs-lisp-mode . helm-gtags-mode))
-  :custom (helm-gtags-auto-update t)
-  :config (setenv "GTAGSLABEL" "pygments"))
+  :custom
+  (helm-gtags-auto-update t)
+  :config
+  (setenv "GTAGSLABEL" "pygments"))
+
+
+;;; magit
+(use-package magit
+  :bind ("C-x g"    . magit-status))
 
 
 ;;; git-gutter
 (use-package git-gutter
+  :bind
+  (("C-x p"         . git-gutter:previous-hunk)
+   ("C-x n"         . git-gutter:next-hunk))
   :config (global-git-gutter-mode t))
+
+
+;;; quickrun
+(use-package quickrun
+  :bind
+  ("C-c q"          . quickrun))
