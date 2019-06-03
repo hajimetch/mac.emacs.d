@@ -9,15 +9,6 @@
 (bind-key "C-c n"          'next-error)
 
 
-;;; isearch
-(bind-keys :map isearch-mode-map
-           ("C-d" .        isearch-delete-char)
-           ("C-e" .        isearch-edit-string)
-           ("C-g" .        (lambda() (interactive) (isearch-done)))
-           ("C-y" .        isearch-yank-kill)
-           ("TAB" .        isearch-yank-word)
-           ("M-s" .        helm-swoop-from-isearch))
-
 ;;; Font Size
 ;; Adjust
 (bind-key "M-<wheel-up>"   '(lambda() (interactive) (text-scale-increase 1)))

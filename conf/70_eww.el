@@ -2,7 +2,7 @@
 (use-package eww
   :bind
   (:map  eww-mode-map
-         ("w" . eww-copy-page-url))
+         ("w"       . eww-copy-page-url))
 
   :hook
   (eww-mode . my/eww-mode-hook--disable-image)

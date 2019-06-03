@@ -120,10 +120,11 @@
 
 
 ;;; helm-man-woman
-(use-package helm-elisp)                ; ソースを読み込む
-(use-package helm-man
-  :after (helm helm-elisp)
+(use-package helm-elisp
+  :after helm
   :bind ("<M-f1>" . my/helm-for-document)
+  :init
+  (use-package helm-man)                ; ソースを読み込む
   :custom
   (helm-for-document-sources            ; 基本となるソースを定義
    '(helm-source-info-elisp

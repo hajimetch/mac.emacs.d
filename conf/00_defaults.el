@@ -169,15 +169,15 @@
 ;; company
 (use-package company
   :bind
-  (("TAB"            . company-complete)
-   ("M-/"            . company-dabbrev)
+  (("TAB"           . company-complete)
+   ("M-/"           . company-dabbrev)
    :map company-active-map
-   ("C-d"            . company-filter-candidates)
-   ("C-n"            . company-select-next)
-   ("C-p"            . company-select-previous)
+   ("C-d"           . company-filter-candidates)
+   ("C-n"           . company-select-next)
+   ("C-p"           . company-select-previous)
    :map company-search-map
-   ("C-n"            . company-select-next)
-   ("C-p"            . company-select-previous))
+   ("C-n"           . company-select-next)
+   ("C-p"           . company-select-previous))
   :config (global-company-mode t))
 
 ;; company-quickhelp

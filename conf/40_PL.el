@@ -7,7 +7,7 @@
 
 ;;; jedi
 (use-package jedi-core
-  :after python
+  :after (python company)
   :hook (python-mode . jedi:setup)
   :custom
   (jedi:complete-on-dot t)
@@ -52,9 +52,10 @@
 
 
 ;;; mark-down-mode
-(use-package mark-down-mode
-  :mode ("\\.md'"   . mark-down-mode)
-  :custom (markdown-command "pandoc -s --self-contained -t html5 -c ~/.pandoc/github.css --quiet"))
+(use-package markdown-mode
+  :mode ("\\.md'"   . markdown-mode)
+  :custom (markdown-command "pandoc -s --self-contained -t html5 -c ~/.pandoc/github.css --quiet")
+  :config (skk-wrap-newline-command markdown-enter-key))
 
 
 ;;; php-mode
@@ -67,12 +68,12 @@
   :after helm
   :bind
   (:map helm-gtags-mode-map
-        ("C-c . ." . helm-gtags-find-tag-from-here)
-        ("C-c . ," . helm-gtags-pop-stack)
-        ("C-c . t" . helm-gtags-find-tag)
-        ("C-c . r" . helm-gtags-find-rtag)
-        ("C-c . s" . helm-gtags-find-symbol)
-        ("C-c . f" . helm-gtags-find-files))
+        ("C-c . ."  . helm-gtags-find-tag-from-here)
+        ("C-c . ,"  . helm-gtags-pop-stack)
+        ("C-c . t"  . helm-gtags-find-tag)
+        ("C-c . r"  . helm-gtags-find-rtag)
+        ("C-c . s"  . helm-gtags-find-symbol)
+        ("C-c . f"  . helm-gtags-find-files))
   :hook
   ((python-mode     . helm-gtags-mode)
    (emacs-lisp-mode . helm-gtags-mode))

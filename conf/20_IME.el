@@ -11,14 +11,21 @@
    ("<down>"        . my/skk-next-candidate)
    ("<up>"          . my/skk-previous-candidate)
    ("C-M-,"         . skk-toggle-kutouten)
-   ("<S-return>"    . skk-undo-kakutei))
+   ("<S-return>"    . skk-undo-kakutei)
+   :map isearch-mode-map
+   ("C-d"           . isearch-delete-char)
+   ("C-e"           . isearch-edit-string)
+   ("C-g"           . (lambda() (interactive) (isearch-done)))
+   ("C-y"           . isearch-yank-kill)
+   ("TAB"           . isearch-yank-word)
+   ("M-s"           . helm-swoop-from-isearch))
 
   :hook
   ((focus-in . my/eisuu-key)
    (isearch-mode . skk-isearch-mode-setup)
    (isearch-mode-end . skk-isearch-mode-cleanup))
 
-  :commands (skk-wrap-newline-command)
+  :commands skk-wrap-newline-command
 
   :init (setq skk-user-directory "~/Dropbox/Emacs/ddskk/") ; 設定ファイルパス
 
@@ -108,6 +115,4 @@
     (interactive)
     (call-process "osascript" nil t nil "-e" "tell application \"System Events\" to key code 102"))
   ;; チュートリアルのパス
-  (setq skk-tut-file "~/Dropbox/Emacs/ddskk/SKK.tut")
-  ;; markdown-mode
-  (skk-wrap-newline-command markdown-enter-key))
+  (setq skk-tut-file "~/Dropbox/Emacs/ddskk/SKK.tut"))
