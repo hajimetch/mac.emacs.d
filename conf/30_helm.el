@@ -1,12 +1,11 @@
 ;;; Helm
-(use-package helm
+(use-package helm :ensure
   :bind
   (("M-x"           . helm-M-x)
    ("C-x C-f"       . helm-find-files)
    ("C-x C-x"       . helm-mini)
    ("C-x C-z"       . helm-resume)
    ("C-c i"         . helm-semantic-or-imenu)
-   ("C-c m"         . helm-man-woman)
    ("C-c w"         . helm-google-suggest)
    ("C-c C-SPC"     . helm-all-mark-rings)
    ("C-c <f1>"      . helm-info)
@@ -42,14 +41,15 @@
     (setq current-prefix-arg '(4))
     (call-interactively 'helm-ff-run-browse-project)))
 
+
 ;;; helm-elscreen
-(use-package helm-elscreen
+(use-package helm-elscreen :ensure
   :after (helm elscreen)
   :bind ("C-x C-l"  . helm-elscreen))
 
 
 ;;; helm-ag(ripgrep)
-(use-package helm-ag
+(use-package helm-ag :ensure
   :after helm
   :bind ("C-c g"    . helm-do-ag)
   :custom
@@ -57,7 +57,7 @@
 
 
 ;;; helm-swoop
-(use-package helm-swoop
+(use-package helm-swoop :ensure
   :after helm
   :bind
   (("M-s"           . helm-swoop)
@@ -69,7 +69,7 @@
 
 
 ;;; helm-descbinds
-(use-package helm-descbinds
+(use-package helm-descbinds :ensure
   :after helm
   :bind ("C-c k"    . helm-descbinds)
   )
@@ -83,9 +83,9 @@
      "~/Dropbox/Emacs/snippets/yasnippets" ; デフォルトスニペット
      )))
 
-(use-package helm-c-yasnippet
+(use-package helm-c-yasnippet :ensure
   :after (helm yasnippet)
-  :bind ("C-c y" . helm-yas-complete)
+  :bind ("C-c y"    . helm-yas-complete)
   :custom (helm-yas-space-match-any-greedy t)
   :config
   (push '("emacs.+/snippets/" . snippet-mode) auto-mode-alist)
@@ -93,13 +93,13 @@
 
 
 ;;; Projectile
-(use-package projectile
+(use-package projectile :ensure
   :custom (projectile-completion-system 'helm)
   :config (projectile-mode t))
 
-(use-package helm-projectile
+(use-package helm-projectile :ensure
   :after (helm projectile)
-  :bind ("C-x C-p" . helm-projectile)
+  :bind ("C-x C-p"  . helm-projectile)
   :bind-keymap ("C-c C-p" . projectile-command-map)
   :custom
   (projectile-git-command "fd . -0")    ; fd を使用
@@ -119,12 +119,13 @@
       (error "helm-ag not available"))))
 
 
-;;; helm-man-woman
+;;; Manual
+(use-package helm-man :demand
+  :bind ("C-c m"    . helm-man-woman))
+
 (use-package helm-elisp
-  :after helm
-  :bind ("<M-f1>" . my/helm-for-document)
-  :init
-  (use-package helm-man)                ; ソースを読み込む
+  :after (helm helm-man)
+  :bind ("<M-f1>"   . my/helm-for-document)
   :custom
   (helm-for-document-sources            ; 基本となるソースを定義
    '(helm-source-info-elisp

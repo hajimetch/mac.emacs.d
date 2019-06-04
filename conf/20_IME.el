@@ -1,4 +1,14 @@
+(unless (locate-library "skk")
+  (package-install 'ddskk))
 (use-package skk
+  :init
+  (setq skk-user-directory "~/Dropbox/Emacs/ddskk/")
+                                        ; 設定ファイルパス
+  (use-package skk-study)               ; 変換学習機能
+  (use-package skk-hint)                ; ヒント
+  (use-package context-skk)             ; 自動的にモード切り替え
+  (use-package sticky :ensure)          ; skk-sticky-keyに必要
+
   :bind
   (("C-S-j"         . ignore)
    ("C-:"           . ignore)
@@ -26,8 +36,6 @@
    (isearch-mode-end . skk-isearch-mode-cleanup))
 
   :commands skk-wrap-newline-command
-
-  :init (setq skk-user-directory "~/Dropbox/Emacs/ddskk/") ; 設定ファイルパス
 
   :custom
   ;; 全般
@@ -71,6 +79,8 @@
   (skk-show-japanese-menu t)            ; メニューを日本語に
   ;; 基本辞書
   (skk-large-jisyo "~/Dropbox/Emacs/ddskk/SKK-JISYO.L")
+  ;; チュートリアルのパス
+  (skk-tut-file "~/Dropbox/Emacs/ddskk/SKK.tut")
 
   :custom-face
   (skk-dcomp-multiple-face              ; 動的補完の複数表示郡
@@ -81,10 +91,6 @@
    ((t (:foreground "White" :background "LightGoldenrod4" :bold nil))))
 
   :config
-  ;; 従属パッケージ
-  (use-package skk-study)               ; 変換学習機能
-  (use-package skk-hint)                ; ヒント
-  (use-package context-skk)             ; 自動的にモード切り替え
   ;; 個人辞書の自動保存
   (defvar my/skk-auto-save-jisyo-interval 600
     "Interval of saving jisyo.")
@@ -113,6 +119,4 @@
   (defun my/eisuu-key ()
     "Disable macOS IME on Emacs."
     (interactive)
-    (call-process "osascript" nil t nil "-e" "tell application \"System Events\" to key code 102"))
-  ;; チュートリアルのパス
-  (setq skk-tut-file "~/Dropbox/Emacs/ddskk/SKK.tut"))
+    (call-process "osascript" nil t nil "-e" "tell application \"System Events\" to key code 102")))

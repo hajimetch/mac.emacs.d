@@ -98,11 +98,7 @@
 
 
 ;;; howm
-(use-package howm
-  :bind
-  (:map howm-mode-map
-        ("C-c C-c"  . my/howm-save-buffer-and-kill)
-        ("C-c C-k"  . my/howm-kill-buffer))
+(use-package howm :ensure :demand
   :init
   (setq howm-view-title-header "*")
   (setq howm-prefix (kbd "C-x ,"))
@@ -112,6 +108,10 @@
   (howm-history-file (concat howm-directory ".howm-history"))
   (howm-menu-file (concat howm-directory "menu.txt"))
   (howm-menu-lang 'ja)                  ; home-menu の言語
+  :bind
+  (:map howm-mode-map
+        ("C-c C-c"  . my/howm-save-buffer-and-kill)
+        ("C-c C-k"  . my/howm-kill-buffer))
   :config
   ;; メモを保存と同時に閉じる
   (defun my/howm-save-buffer-and-kill()
@@ -131,6 +131,6 @@
 
 
 ;;; open-junk-file
-(use-package open-junk-file
+(use-package open-junk-file :ensure
   :bind ("C-c j"    . open-junk-file)
   :custom (open-junk-file-format "~/Dropbox/Emacs/junk/%Y-%m-%d-%H%M%S."))
