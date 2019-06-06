@@ -8,7 +8,6 @@
    ("C-c i"         . helm-semantic-or-imenu)
    ("C-c w"         . helm-google-suggest)
    ("C-c C-SPC"     . helm-all-mark-rings)
-   ("C-c <f1>"      . helm-info)
    ("C-M-y"         . helm-show-kill-ring)
    :map helm-map
    ("TAB"           . helm-execute-persistent-action)
@@ -125,7 +124,7 @@
 
 (use-package helm-elisp
   :after (helm helm-man)
-  :bind ("<M-f1>"   . my/helm-for-document)
+  :bind ("C-c <f1>" . my/helm-for-document)
   :custom
   (helm-for-document-sources            ; 基本となるソースを定義
    '(helm-source-info-elisp
