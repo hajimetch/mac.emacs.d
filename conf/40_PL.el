@@ -11,8 +11,8 @@
 
 ;; jedi
 (use-package company-jedi :ensure
-  :init (require 'jedi-core)
   :after (python company)
+  :init (require 'jedi-core)
   :hook (python-mode . jedi:setup)
   :custom
   (jedi:complete-on-dot t)
@@ -57,7 +57,7 @@
   :mode ("\\.js\\'" . js2-mode))
 
 
-;;; mark-down-mode
+;;; markdown-mode
 (use-package markdown-mode :ensure
   :mode ("\\.md'"   . markdown-mode)
   :custom (markdown-command "pandoc -s --self-contained -t html5 -c ~/.pandoc/github.css --quiet")

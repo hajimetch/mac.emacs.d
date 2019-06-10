@@ -16,8 +16,8 @@
   (ps-bottom-margin     40)
   (ps-n-up-margin       20)
   ;; Header/Footer setup
-  (ps-print-header      t)           ; buffer na-me, page number, etc.
-  (ps-print-footer      nil)         ; page number
+  (ps-print-header      t)            ; buffer name, page number, etc.
+  (ps-print-footer      nil)          ; page number
   ;; font
   (ps-font-size         '(10 . 12))
   (ps-header-font-size  '(10 . 12))

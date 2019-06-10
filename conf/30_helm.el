@@ -9,11 +9,13 @@
    ("C-c w"         . helm-google-suggest)
    ("C-c C-SPC"     . helm-all-mark-rings)
    ("C-M-y"         . helm-show-kill-ring)
+   ("<f2>"          . my/helm-apropos-this)
    :map helm-map
    ("TAB"           . helm-execute-persistent-action)
    ("C-z"           . helm-select-action)
    ("M-b"           . my/helm-ff-run-browse-project)
    ("<f1>"          . helm-help))
+
   :custom
   (helm-mini-default-sources            ; helm-mini に表示するソース
    '(helm-source-buffers-list
@@ -23,22 +25,29 @@
   (helm-autoresize-max-height 0)        ; Helm バッファのサイズ
   (helm-autoresize-min-height 40)
   (helm-default-display-buffer-functions '(display-buffer-in-side-window))
-                                        ; Helm バッファが常にウィンドウの下側に来るように設定
-  (helm-scroll-amount 8)                ; その他の設定
-  (helm-split-window-inside-p t)
-  (helm-ff-search-library-in-sexp t)
-  (helm-ff-file-name-history-use-recentf t)
+                                        ; Helm バッファは常にウィンドウの下側
+  (helm-scroll-amount 8)                ; 他バッファのスクロール行数
+  (helm-split-window-inside-p t)        ; 他バッファを保持
+  (helm-ff-search-library-in-sexp t)    ; ff でライブラリを検索
+  (helm-ff-file-name-history-use-recentf t) ; ff でrecentf を使用
+  (helm-google-suggest-use-curl-p t)   ; google suggest で curl を使用
+
   :config
   (bind-key* "M-m"  'helm-migemo-mode helm-map)
-  (helm-autoresize-mode t)
   (helm-mode t)
   (helm-migemo-mode t)
+  (helm-autoresize-mode t)
   ;; helm-find-file から browse-project を呼び出す
   (defun my/helm-ff-run-browse-project ()
     "Call helm-ff-run-browse-project with C-u."
     (interactive)
     (setq current-prefix-arg '(4))
-    (call-interactively 'helm-ff-run-browse-project)))
+    (call-interactively 'helm-ff-run-browse-project))
+  ;; カーソル位置のシンボルで helm-apropos を呼び出す
+  (defun my/helm-apropos-this ()
+    "helm-apropos with this symbol."
+    (interactive)
+    (helm-apropos (thing-at-point 'symbol))))
 
 
 ;;; helm-elscreen
@@ -70,8 +79,7 @@
 ;;; helm-descbinds
 (use-package helm-descbinds :ensure
   :after helm
-  :bind ("C-c k"    . helm-descbinds)
-  )
+  :bind ("C-c k"    . helm-descbinds))
 
 
 ;;; Yasnippet
@@ -99,7 +107,7 @@
 (use-package helm-projectile :ensure
   :after (helm projectile)
   :bind ("C-x C-p"  . helm-projectile)
-  :bind-keymap ("C-c C-p" . projectile-command-map)
+  :bind-keymap* ("C-c C-p" . projectile-command-map)
   :custom
   (projectile-git-command "fd . -0")    ; fd を使用
   (projectile-generic-command "fd . -0")
@@ -124,7 +132,7 @@
 
 (use-package helm-elisp
   :after (helm helm-man)
-  :bind ("C-c <f1>" . my/helm-for-document)
+  :bind ("<f3>"     . my/helm-for-document)
   :custom
   (helm-for-document-sources            ; 基本となるソースを定義
    '(helm-source-info-elisp
