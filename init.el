@@ -1,3 +1,4 @@
+;;;; Modified: 2019-06-18
 ;;; package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -60,8 +61,9 @@
 ;;; Path
 (use-package exec-path-from-shell :ensure
   :if window-system
-  :custom (exec-path-from-shell-check-startup-files nil)
-  :config (exec-path-from-shell-initialize))
+  :config
+  (set-variable 'exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
 
 
 ;;; Desktop
@@ -291,6 +293,12 @@
 (set-variable 'save-abbrevs 'silently)
 
 
+;;; time-stamp
+(with-eval-after-load 'time-stamp
+  (set-variable 'time-stamp-active t))
+(add-hook 'before-save-hook 'time-stamp)
+
+
 ;;; Mac 標準辞書アプリと連携
 (defun my/dictionary ()
   "dictionary.app"
@@ -317,6 +325,9 @@
 ;;; その他
 ;; dired バッファを並べる
 (set-variable 'dired-dwim-target t)
+
+;; 画像ファイルは画像として表示
+(set-variable 'auto-image-file-mode t)
 
 ;; ファイルが #! から始まる場合、+x を付けて保存する
 (add-hook 'after-save-hook
@@ -590,11 +601,6 @@
 (set-variable 'kill-read-only-ok t) ; 読み取り専用バッファもカットでコピー
 
 
-;;; その他
-(set-variable 'ring-bell-function 'ignore) ; アラートのビープ音は消す
-(set-variable 'auto-image-file-mode t)  ; 画像ファイルは画像として表示
-
-
 ;;;; 20_IME.el
 (unless (locate-library "skk")
   (package-install 'ddskk))
@@ -807,9 +813,9 @@
    :map helm-swoop-map
    ("C-s"           . helm-next-line)
    ("C-r"           . helm-previous-line))
-  :custom
+  :config
   (set-variable 'helm-swoop-move-to-line-cycle nil) ; リストを循環しない
-  (helm-swoop-split-window-function 'helm-default-display-buffer))
+  (setq helm-swoop-split-window-function 'helm-default-display-buffer))
                                         ; 常に full-width で表示
 
 
@@ -821,11 +827,11 @@
 
 ;;; Yasnippet
 (use-package yasnippet
-  :custom
-  (yas-snippet-dirs
-   '("~/Dropbox/Emacs/snippets/mysnippets" ; 自作スニペット
-     "~/Dropbox/Emacs/snippets/yasnippets" ; デフォルトスニペット
-     )))
+  :config
+  (set-variable 'yas-snippet-dirs
+                '("~/Dropbox/Emacs/snippets/mysnippets" ; 自作スニペット
+                  "~/Dropbox/Emacs/snippets/yasnippets" ; デフォルトスニペット
+                  )))
 
 (use-package helm-c-yasnippet :ensure
   :after (helm yasnippet)
@@ -1251,27 +1257,28 @@
   (defun my/eww-mode-hook--disable-image ()
     "Disable showing images with eww-mode-hook."
     (setq-local shr-put-image-function 'my/shr-put-image-alt))
-  (add-hook 'eww-mode-hook 'my/eww-mode-hook--disable-image)
+  (add-hook 'eww-mode-hook 'my/eww-mode-hook--disable-image))
 
-  ;; 現在の url を eww で開く
-  (defun my/browse-url-with-eww ()
-    "Browse current url with eww."
-    (interactive)
-    (let ((url-region (bounds-of-thing-at-point 'url)))
-      (cond
-       ;; url
-       (url-region
-        (eww-browse-url (buffer-substring-no-properties
-                         (car url-region)(cdr url-region))))
-       ;; org-link
-       ((or (org-in-regexp org-any-link-re)
-            (org-in-regexp org-ts-regexp-both nil t)
-            (org-in-regexp org-tsr-regexp-both nil t))
-        (let ((browse-url-browser-function 'eww-browse-url))
-          (org-open-at-point-global)))
-       ;; others
-       (t (eww-search-words))))))
-
+;; 現在の url を eww で開く
+(defun my/browse-url-with-eww ()
+  "Browse current url with eww."
+  (interactive)
+  (require 'eww)
+  (require 'org)
+  (let ((url-region (bounds-of-thing-at-point 'url)))
+    (cond
+     ;; url
+     (url-region
+      (eww-browse-url (buffer-substring-no-properties
+                       (car url-region)(cdr url-region))))
+     ;; org-link
+     ((or (org-in-regexp org-any-link-re)
+          (org-in-regexp org-ts-regexp-both nil t)
+          (org-in-regexp org-tsr-regexp-both nil t))
+      (let ((browse-url-browser-function 'eww-browse-url))
+        (org-open-at-point-global)))
+     ;; others
+     (t (eww-search-words)))))
 (bind-key* "C-c C-w" 'my/browse-url-with-eww)
 
 
@@ -1343,3 +1350,12 @@
 (bind-key "<backtab>"                     ; TAB挿入
           '(lambda() (interactive) (insert "	")))
 (bind-key "<f1>"           'help-for-help) ; ヘルプ参照
+
+
+;; Local Variables:
+;; coding: utf-8-unix
+;; outline-minor-mode: t
+;; auto-complete-mode: nil
+;; flycheck-mode: nil
+;; time-stamp-pattern: "10/Modified:\\\\?[ \t]+%:y-%02m-%02d\\\\?\n"
+;; End:
