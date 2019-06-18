@@ -16,33 +16,34 @@
    ("M-b"           . my/helm-ff-run-browse-project)
    ("<f1>"          . helm-help))
 
-  :custom
-  (helm-mini-default-sources            ; helm-mini に表示するソース
-   '(helm-source-buffers-list
-     helm-source-recentf
-     helm-source-files-in-current-dir))
-  (helm-candidate-number-limit 100)     ; 表示する最大候補数
-  (helm-autoresize-max-height 0)        ; Helm バッファのサイズ
-  (helm-autoresize-min-height 40)
-  (helm-default-display-buffer-functions '(display-buffer-in-side-window))
-                                        ; Helm バッファは常にウィンドウの下側
-  (helm-scroll-amount 8)                ; 他バッファのスクロール行数
-  (helm-split-window-inside-p t)        ; 他バッファを保持
-  (helm-ff-search-library-in-sexp t)    ; ff でライブラリを検索
-  (helm-ff-file-name-history-use-recentf t) ; ff でrecentf を使用
-  (helm-google-suggest-use-curl-p t)   ; google suggest で curl を使用
-
   :config
-  (bind-key* "M-m"  'helm-migemo-mode helm-map)
+  (bind-key* "M-m" 'helm-migemo-mode helm-map)
+  (set-variable 'helm-mini-default-sources ; helm-mini に表示するソース
+                '(helm-source-buffers-list
+                  helm-source-recentf
+                  helm-source-files-in-current-dir))
+  (set-variable 'helm-candidate-number-limit 100) ; 表示する最大候補数
+  (set-variable 'helm-autoresize-max-height 0) ; Helm バッファのサイズ
+  (set-variable 'helm-autoresize-min-height 40)
+  (set-variable 'helm-default-display-buffer-functions
+                '(display-buffer-in-side-window)) ; Helm バッファは常にウィンドウの下側
+  (set-variable 'helm-scroll-amount 8)  ; 他バッファのスクロール行数
+  (set-variable 'helm-split-window-inside-p t)     ; 他バッファを保持
+  (set-variable 'helm-ff-search-library-in-sexp t) ; ff でライブラリを検索
+  (set-variable 'helm-ff-file-name-history-use-recentf t) ; ff でrecentf を使用
+  (set-variable 'helm-google-suggest-use-curl-p t) ; Google Suggest で curl を使用
+
   (helm-mode t)
   (helm-migemo-mode t)
   (helm-autoresize-mode t)
+
   ;; helm-find-file から browse-project を呼び出す
   (defun my/helm-ff-run-browse-project ()
     "Call helm-ff-run-browse-project with C-u."
     (interactive)
     (setq current-prefix-arg '(4))
     (call-interactively 'helm-ff-run-browse-project))
+
   ;; カーソル位置のシンボルで helm-apropos を呼び出す
   (defun my/helm-apropos-this ()
     "helm-apropos with this symbol."
@@ -60,8 +61,7 @@
 (use-package helm-ag :ensure
   :after helm
   :bind ("C-c g"    . helm-do-ag)
-  :custom
-  (helm-ag-base-command "rg --vimgrep --no-heading --smart-case"))
+  :config (set-variable 'helm-ag-base-command "rg --vimgrep --no-heading --smart-case"))
 
 
 ;;; helm-swoop
@@ -72,8 +72,10 @@
    :map helm-swoop-map
    ("C-s"           . helm-next-line)
    ("C-r"           . helm-previous-line))
-  :custom (helm-swoop-move-to-line-cycle nil) ; リストを循環しない
-  )
+  :custom
+  (set-variable 'helm-swoop-move-to-line-cycle nil) ; リストを循環しない
+  (helm-swoop-split-window-function 'helm-default-display-buffer))
+                                        ; 常に full-width で表示
 
 
 ;;; helm-descbinds
@@ -93,26 +95,28 @@
 (use-package helm-c-yasnippet :ensure
   :after (helm yasnippet)
   :bind ("C-c y"    . helm-yas-complete)
-  :custom (helm-yas-space-match-any-greedy t)
   :config
-  (push '("emacs.+/snippets/" . snippet-mode) auto-mode-alist)
+  (set-variable 'helm-yas-space-match-any-greedy t)
+  (add-to-list 'auto-mode-alist '("emacs.+/snippets/" . snippet-mode))
   (yas-global-mode t))
 
 
 ;;; Projectile
 (use-package projectile :ensure
-  :custom (projectile-completion-system 'helm)
-  :config (projectile-mode t))
+  :diminish projectile-mode "Prj"
+  :config
+  (set-variable 'projectile-completion-system 'helm)
+  (projectile-mode t))
 
 (use-package helm-projectile :ensure
   :after (helm projectile)
   :bind ("C-x C-p"  . helm-projectile)
   :bind-keymap* ("C-c C-p" . projectile-command-map)
-  :custom
-  (projectile-git-command "fd . -0")    ; fd を使用
-  (projectile-generic-command "fd . -0")
   :config
+  (set-variable 'projectile-git-command "fd . -0") ; fd を使用
+  (set-variable 'projectile-generic-command "fd . -0")
   (helm-projectile-on)
+
   ;; helm-projectile-ag が ripgrep で動作しない問題を回避
   (defun helm-projectile-ag (&optional options)
     "Helm version of projectile-ag."
@@ -133,13 +137,14 @@
 (use-package helm-elisp
   :after (helm helm-man)
   :bind ("<f3>"     . my/helm-for-document)
-  :custom
-  (helm-for-document-sources            ; 基本となるソースを定義
-   '(helm-source-info-elisp
-     helm-source-info-cl
-     helm-source-info-eieio
-     helm-source-man-pages))
   :config
+  (defvar my/helm-for-document-sources
+    '(helm-source-info-elisp
+      helm-source-info-cl
+      helm-source-info-eieio
+      helm-source-man-pages)
+    "Document sources for my/helm-for-document.")
+
   ;; man, info, apropos を串刺し検索する
   (defun my/helm-for-document ()
     "Preconfigured `helm' for helm-for-document."
@@ -150,5 +155,5 @@
              (mapcar (lambda (func)
                        (funcall func default))
                      helm-apropos-function-list)
-             helm-for-document-sources)
+             my/helm-for-document-sources)
             :buffer "*helm for document*"))))

@@ -6,7 +6,7 @@
  '(custom-enabled-themes (quote (tangotango)))
  '(custom-safe-themes
    (quote
-    ("713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "713f898dd8c881c139b62cf05b7ac476d05735825d49006255c0a31f9a4f46ab" "4e63466756c7dbd78b49ce86f5f0954b92bf70b30c01c494b37c586639fa3f6f" default)))
  '(org-agenda-files
    (quote
     ("/Users/hajimetch/Dropbox/Emacs/org/note.org" "/Users/hajimetch/Dropbox/Emacs/org/archive.org" "/Users/hajimetch/Dropbox/Emacs/org/task.org")))
