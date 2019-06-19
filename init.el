@@ -1,4 +1,4 @@
-;;;; Modified: 2019-06-18
+;;;; Modified: 2019-06-19
 ;;; package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -43,7 +43,7 @@
 
 
 ;;; load theme
-(use-package tangotango-theme :ensure)
+(use-package tangotango-theme :no-require :defer :ensure)
 
 
 ;;; custom-file
@@ -57,9 +57,15 @@
 (load custom-file)
 
 
+;;; auto-compile
+(use-package auto-compile :no-require :defer :ensure
+  :diminish "C"
+  :hook (emacs-lisp-mode . auto-compile-mode))
+
+
 ;;;; 00_defaults.el
 ;;; Path
-(use-package exec-path-from-shell :ensure
+(use-package exec-path-from-shell :no-require :ensure
   :if window-system
   :config
   (set-variable 'exec-path-from-shell-check-startup-files nil)
@@ -114,7 +120,7 @@
 (set-variable 'isearch-allow-scroll nil)
 
 ;; migemo
-(use-package migemo :ensure
+(use-package migemo :no-require :ensure
   :if (executable-find "cmigemo")
   :config
   (set-variable 'migemo-command "cmigemo")
@@ -127,7 +133,7 @@
   (migemo-init))
 
 ;; anzu
-(use-package anzu :ensure
+(use-package anzu :no-require :ensure
   :config (global-anzu-mode t))
 
 
@@ -183,7 +189,7 @@
 
 
 ;;; recentf 関連
-(use-package recentf-ext :ensure)
+(use-package recentf-ext :no-require :ensure)
 
 ;; recentf から除外するファイル
 (set-variable 'recentf-exclude (list "recentf"
@@ -215,12 +221,12 @@
   (undohist-initialize))
 
 ;; undo-tree
-(use-package undo-tree :ensure
+(use-package undo-tree :no-require :ensure
   :diminish undo-tree-mode "UTree"
   :config (global-undo-tree-mode t))
 
 ;; point-undo
-(use-package point-undo
+(use-package point-undo :demand
   :bind
   ("M-["            . point-undo)
   ("M-]"            . point-redo))
@@ -228,7 +234,7 @@
 
 ;;; company
 ;; company
-(use-package company :ensure
+(use-package company :no-require :ensure
   :diminish company-mode "Comp"
   :bind
   (("TAB"           . company-complete)
@@ -243,20 +249,20 @@
   :config (global-company-mode t))
 
 ;; company-quickhelp
-(use-package company-quickhelp :ensure
+(use-package company-quickhelp :no-require :ensure
   :after company
   :config (company-quickhelp-mode t))
 
 
 ;;; which-key
-(use-package which-key :ensure
+(use-package which-key :no-require :ensure
   :config
   (which-key-setup-side-window-bottom)
   (which-key-mode t))
 
 
 ;;; multiple-cursor
-(use-package multiple-cursors :ensure
+(use-package multiple-cursors :no-require :ensure
   :bind
   (("C->"           . mc/mark-next-like-this)
    ("C-<"           . mc/mark-previous-like-this)
@@ -265,7 +271,7 @@
 
 
 ;;; expand-region
-(use-package expand-region :ensure
+(use-package expand-region :no-require :ensure
   :bind
   ("C-="            . er/expand-region)
   ("C--"            . er/contract-region))
@@ -363,7 +369,7 @@
 
 ;;; タイトル
 (when window-system
-  (setq frame-title-format '("Emacs " emacs-version " - "
+  (setq frame-title-format '("Emacs " emacs-version
                              (:eval (if (buffer-file-name) " - %f" " - %b")))))
 
 
@@ -424,7 +430,7 @@
 
 ;;; 括弧
 ;; 括弧にカラフルな色を付ける
-(use-package rainbow-delimiters :ensure
+(use-package rainbow-delimiters :no-require :ensure
   :init (use-package color)
   :hook ((prog-mode . rainbow-delimiters-mode)
          (emacs-startup . my/rainbow-delimiters-using-stronger-colors))
@@ -439,16 +445,16 @@
        (cl-callf color-saturate-name (face-foreground face) 30)))))
 
 ;; 自動的に括弧を付ける
-(use-package smartparens :ensure
-  :init (use-package smartparens-config)
+(use-package smartparens :no-require :ensure
+  :init (use-package smartparens-config :no-require)
   :hook (prog-mode . smartparens-mode))
 
 
 ;;; モードライン
-(use-package smart-mode-line :ensure
+(use-package smart-mode-line :no-require :ensure
   :init
-  (use-package diminish :ensure)
-  (use-package total-lines :ensure)
+  (use-package diminish :no-require :ensure)
+  (use-package total-lines :no-require :ensure)
   :hook
   (after-init . my/set-line-numbers)
   :config
@@ -526,7 +532,7 @@
   (set-variable 'uniquify-ignore-buffers-re "*[^*]+*"))
 
 ;; 行の文字数の目印を付ける
-(use-package fill-column-indicator :ensure
+(use-package fill-column-indicator :no-require :ensure
   :config
   (set-variable 'fci-rule-width 1)
   (set-variable 'fci-rule-color "dim gray")
@@ -546,7 +552,7 @@
 
 ;;; ウィンドウ
 ;; ElScreen
-(use-package elscreen :ensure :demand
+(use-package elscreen :no-require :demand :ensure
   :bind
   ("<f12>"          . elscreen-next)
   ("<f11>"          . elscreen-previous)
@@ -557,19 +563,17 @@
     (bind-key "C-z" 'suspend-emacs elscreen-map)))
 
 ;; shackle
-(use-package shackle :ensure
+(use-package shackle :no-require :ensure
   :config
   (set-variable 'shackle-rules
                 '((compilation-mode :align below :ratio 0.3)
                   ("*Completions*" :align below :ratio 0.3)
                   ("*Help*" :align below :ratio 0.4 :select t)
-                  ("*eshell*" :align below :ratio 0.4 :popup t)
-                  ("*候補*" :align below :ratio 0.3)
-                  ("*SKK annotation*" :align below :ratio 0.3)))
+                  ("*eshell*" :align below :ratio 0.4 :popup t)))
   (shackle-mode t))
 
 ;; rotete-window
-(use-package rotate :ensure
+(use-package rotate :no-require :ensure
   :bind
   ("M-t"            . rotate-window)
   :config
@@ -589,7 +593,7 @@
 
 ;;; 選択領域・カット
 ;; hungry-delete
-(use-package hungry-delete :ensure
+(use-package hungry-delete :no-require :ensure
   :config (global-hungry-delete-mode t))
 
 ;; 矩形選択
@@ -604,13 +608,13 @@
 ;;;; 20_IME.el
 (unless (locate-library "skk")
   (package-install 'ddskk))
-(use-package skk
+(use-package skk :no-require
   :init
   (set-variable 'skk-user-directory "~/Dropbox/Emacs/ddskk/")
   (use-package skk-study)               ; 変換学習機能
   (use-package skk-hint)                ; ヒント
-  (use-package context-skk)             ; 自動的にモード切り替え
-  (use-package sticky :ensure)          ; skk-sticky-keyに必要
+  (use-package context-skk :no-require) ; 自動的にモード切り替え
+  (use-package sticky :no-require :ensure) ; skk-sticky-keyに必要
 
   :bind
   (("C-S-j"         . ignore)
@@ -740,7 +744,7 @@
 
 ;;;; 30_helm.el
 ;;; Helm
-(use-package helm :ensure
+(use-package helm :no-require :ensure
   :bind
   (("M-x"           . helm-M-x)
    ("C-x C-f"       . helm-find-files)
@@ -793,20 +797,20 @@
 
 
 ;;; helm-elscreen
-(use-package helm-elscreen :ensure
+(use-package helm-elscreen :no-require :ensure
   :after (helm elscreen)
   :bind ("C-x C-l"  . helm-elscreen))
 
 
 ;;; helm-ag(ripgrep)
-(use-package helm-ag :ensure
+(use-package helm-ag :no-require :ensure
   :after helm
   :bind ("C-c g"    . helm-do-ag)
   :config (set-variable 'helm-ag-base-command "rg --vimgrep --no-heading --smart-case"))
 
 
 ;;; helm-swoop
-(use-package helm-swoop :ensure
+(use-package helm-swoop :no-require :ensure
   :after helm
   :bind
   (("M-s"           . helm-swoop)
@@ -820,42 +824,37 @@
 
 
 ;;; helm-descbinds
-(use-package helm-descbinds :ensure
+(use-package helm-descbinds :no-require :ensure
   :after helm
   :bind ("C-c k"    . helm-descbinds))
 
 
 ;;; Yasnippet
-(use-package yasnippet
+(use-package helm-c-yasnippet :no-require :ensure
+  :init (use-package yasnippet :no-require :ensure)
+  :bind ("C-c y"    . helm-yas-complete)
   :config
   (set-variable 'yas-snippet-dirs
                 '("~/Dropbox/Emacs/snippets/mysnippets" ; 自作スニペット
                   "~/Dropbox/Emacs/snippets/yasnippets" ; デフォルトスニペット
-                  )))
-
-(use-package helm-c-yasnippet :ensure
-  :after (helm yasnippet)
-  :bind ("C-c y"    . helm-yas-complete)
-  :config
+                  ))
   (set-variable 'helm-yas-space-match-any-greedy t)
   (add-to-list 'auto-mode-alist '("emacs.+/snippets/" . snippet-mode))
   (yas-global-mode t))
 
 
 ;;; Projectile
-(use-package projectile :ensure
-  :diminish projectile-mode "Prj"
-  :config
-  (set-variable 'projectile-completion-system 'helm)
-  (projectile-mode t))
-
-(use-package helm-projectile :ensure
-  :after (helm projectile)
+(use-package helm-projectile :no-require :ensure
+  :init
+  (use-package projectile :no-require :ensure
+    :diminish projectile-mode "Prj")
   :bind ("C-x C-p"  . helm-projectile)
   :bind-keymap* ("C-c C-p" . projectile-command-map)
   :config
   (set-variable 'projectile-git-command "fd . -0") ; fd を使用
   (set-variable 'projectile-generic-command "fd . -0")
+  (set-variable 'projectile-completion-system 'helm)
+  (projectile-mode t)
   (helm-projectile-on)
 
   ;; helm-projectile-ag が ripgrep で動作しない問題を回避
@@ -872,12 +871,11 @@
 
 
 ;;; Manual
-(use-package helm-man :demand
-  :bind ("C-c m"    . helm-man-woman))
-
-(use-package helm-elisp
-  :after (helm helm-man)
-  :bind ("<f3>"     . my/helm-for-document)
+(use-package helm-elisp :no-require
+  :init (use-package helm-man)
+  :bind
+  ("C-c m"    . helm-man-woman)
+  ("<f3>"     . my/helm-for-document)
   :config
   (defvar my/helm-for-document-sources
     '(helm-source-info-elisp
@@ -902,7 +900,7 @@
 
 ;;;; 40_PL.el
 ;; py-yapf
-(use-package py-yapf :ensure
+(use-package py-yapf :no-require :ensure
   :after python
   :bind
   (:map python-mode-map
@@ -910,9 +908,9 @@
   :hook (python-mode . py-yapf-enable-on-save))
 
 ;; jedi
-(use-package company-jedi :ensure
+(use-package company-jedi :no-require :ensure
   :after (python company)
-  :init (use-package jedi-core)
+  :init (use-package jedi-core :no-require)
   :hook (python-mode . jedi:setup)
   :config
   (set-variable 'jedi:complete-on-dot t)
@@ -922,8 +920,8 @@
 
 
 ;;; flycheck
-(use-package flycheck :ensure
-  :init (use-package flycheck-pos-tip :ensure)
+(use-package flycheck :no-require :ensure
+  :init (use-package flycheck-pos-tip :no-require :ensure)
   :bind
   (:map flycheck-mode-map
         ("C-c C-d"  . flycheck-list-errors))
@@ -939,7 +937,7 @@
 
 
 ;;; web-mode
-(use-package web-mode :ensure
+(use-package web-mode :no-require :ensure
   :mode
   ("\\.html\\'"
    "\\.css\\'"
@@ -952,12 +950,12 @@
 
 
 ;;; js2-mode
-(use-package js2-mode :ensure
+(use-package js2-mode :no-require :ensure
   :mode "\\.js\\'")
 
 
 ;;; markdown-mode
-(use-package markdown-mode :ensure
+(use-package markdown-mode :no-require :ensure
   :mode "\\.md'"
   :config
   (set-variable 'markdown-command "pandoc -s --self-contained -t html5 -c ~/.pandoc/github.css --quiet")
@@ -965,27 +963,27 @@
 
 
 ;;; php-mode
-(use-package php-mode :ensure
+(use-package php-mode :no-require :ensure
   :config (setq php-manual-url 'ja))
 
 
 ;;; ini-mode
-(use-package ini-mode :ensure
+(use-package ini-mode :no-require :ensure
   :mode "\\.ini\\'")
 
 
 ;;; json-mode
-(use-package json-mode :ensure
+(use-package json-mode :no-require :ensure
   :mode "\\.json\\'")
 
 
 ;;; yaml-mode
-(use-package yaml-mode :ensure
+(use-package yaml-mode :no-require :ensure
   :mode "\\.ya?ml$")
 
 
 ;;; gtags
-(use-package helm-gtags :ensure
+(use-package helm-gtags :no-require :ensure
   :diminish helm-gtags-mode "HGtags"
   :after helm
   :bind
@@ -997,20 +995,19 @@
         ("C-c . s"  . helm-gtags-find-symbol)
         ("C-c . f"  . helm-gtags-find-files))
   :hook
-  ((python-mode     . helm-gtags-mode)
-   (emacs-lisp-mode . helm-gtags-mode))
+  (python-mode     . helm-gtags-mode)
   :config
   (set-variable 'helm-gtags-auto-update t)
   (setenv "GTAGSLABEL" "pygments"))
 
 
 ;;; magit
-(use-package magit :ensure
+(use-package magit :no-require :ensure
   :bind ("C-x g"    . magit-status))
 
 
 ;;; git-gutter
-(use-package git-gutter :ensure
+(use-package git-gutter :no-require :demand :ensure
   :bind
   (("C-x p"         . git-gutter:previous-hunk)
    ("C-x n"         . git-gutter:next-hunk))
@@ -1018,7 +1015,7 @@
 
 
 ;;; quickrun
-(use-package quickrun :ensure
+(use-package quickrun :no-require :ensure
   :bind ("C-c q"    . quickrun))
 
 
@@ -1202,7 +1199,7 @@
 
 
 ;;; open-junk-file
-(use-package open-junk-file :ensure
+(use-package open-junk-file :no-require :ensure
   :bind ("C-c j"    . open-junk-file)
   :config (setq open-junk-file-format "~/Dropbox/Emacs/junk/%Y-%m-%d-%H%M%S."))
 
