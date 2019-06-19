@@ -222,7 +222,7 @@
 
 ;; undo-tree
 (use-package undo-tree :no-require :ensure
-  :diminish undo-tree-mode "UTree"
+  :diminish "UTree"
   :config (global-undo-tree-mode t))
 
 ;; point-undo
@@ -235,7 +235,7 @@
 ;;; company
 ;; company
 (use-package company :no-require :ensure
-  :diminish company-mode "Comp"
+  :diminish "Comp"
   :bind
   (("TAB"           . company-complete)
    ("M-/"           . company-dabbrev)
@@ -470,13 +470,13 @@
                   (append mode-line-front-space
                           '((:eval (format " (%d)" (- total-lines 1)))))))
   ;; アラート時にモードラインを光らせる(紫)
-  (setq ring-bell-function
-        (lambda ()
-          (let ((orig-fg (face-background 'mode-line)))
-            (set-face-background 'mode-line "purple4")
-            (run-with-idle-timer 0.1 nil
-                                 (lambda (fg) (set-face-background 'mode-line fg))
-                                 orig-fg))))
+  (set-variable 'ring-bell-function
+                (lambda ()
+                  (let ((orig-fg (face-background 'mode-line)))
+                    (set-face-background 'mode-line "purple4")
+                    (run-with-idle-timer 0.1 nil
+                                         (lambda (fg) (set-face-background 'mode-line fg))
+                                         orig-fg))))
   ;; 保存時にモードラインを光らせる(緑)
   (add-hook 'after-save-hook
             (lambda ()
@@ -844,17 +844,19 @@
 
 
 ;;; Projectile
-(use-package helm-projectile :no-require :ensure
-  :init
-  (use-package projectile :no-require :ensure
-    :diminish projectile-mode "Prj")
-  :bind ("C-x C-p"  . helm-projectile)
+(use-package projectile :no-require :ensure
+  :diminish "Prj"
   :bind-keymap* ("C-c C-p" . projectile-command-map)
   :config
   (set-variable 'projectile-git-command "fd . -0") ; fd を使用
   (set-variable 'projectile-generic-command "fd . -0")
   (set-variable 'projectile-completion-system 'helm)
-  (projectile-mode t)
+  (projectile-mode t))
+
+(use-package helm-projectile :no-require :ensure
+  :after (helm projectile)
+  :bind ("C-x C-p"  . helm-projectile)
+  :config
   (helm-projectile-on)
 
   ;; helm-projectile-ag が ripgrep で動作しない問題を回避
@@ -984,7 +986,7 @@
 
 ;;; gtags
 (use-package helm-gtags :no-require :ensure
-  :diminish helm-gtags-mode "HGtags"
+  :diminish "HGtags"
   :after helm
   :bind
   (:map helm-gtags-mode-map
@@ -994,8 +996,7 @@
         ("C-c . r"  . helm-gtags-find-rtag)
         ("C-c . s"  . helm-gtags-find-symbol)
         ("C-c . f"  . helm-gtags-find-files))
-  :hook
-  (python-mode     . helm-gtags-mode)
+  :hook (python-mode . helm-gtags-mode)
   :config
   (set-variable 'helm-gtags-auto-update t)
   (setenv "GTAGSLABEL" "pygments"))
@@ -1008,6 +1009,7 @@
 
 ;;; git-gutter
 (use-package git-gutter :no-require :demand :ensure
+  :diminish "GitG"
   :bind
   (("C-x p"         . git-gutter:previous-hunk)
    ("C-x n"         . git-gutter:next-hunk))
