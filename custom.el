@@ -12,12 +12,9 @@
     ("/Users/hajimetch/Dropbox/Emacs/org/note.org" "/Users/hajimetch/Dropbox/Emacs/org/archive.org" "/Users/hajimetch/Dropbox/Emacs/org/task.org")))
  '(package-selected-packages
    (quote
-    (ssh-agency use-package git-gutter helm-gtags yaml-mode php-mode web-mode shackle undo-tree helm-ag helm-descbinds sticky flycheck-pos-tip helm-elscreen elscreen migemo ini-mode helm-projectile projectile magit ddskk which-key json-mode rotate howm undohist recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop js2-mode fill-column-indicator py-yapf quickrun flycheck helm-c-yasnippet helm hungry-delete exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
+    (org-bullets ssh-agency use-package git-gutter helm-gtags yaml-mode php-mode web-mode shackle undo-tree helm-ag helm-descbinds sticky flycheck-pos-tip helm-elscreen elscreen migemo ini-mode helm-projectile projectile magit ddskk which-key json-mode rotate howm undohist recentf-ext volatile-highlights tangotango-theme company-quickhelp company-jedi company markdown-mode bind-key open-junk-file anzu helm-swoop js2-mode fill-column-indicator py-yapf quickrun flycheck helm-c-yasnippet helm hungry-delete exec-path-from-shell smartparens expand-region multiple-cursors rainbow-delimiters)))
  '(recentf-auto-cleanup (quote never))
- '(safe-local-variable-values
-   (quote
-    ((flycheck-mode)
-     (outline-minor-mode . t)))))
+ '(safe-local-variable-values (quote ((flycheck-mode) (outline-minor-mode . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
