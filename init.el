@@ -1,4 +1,4 @@
-;;;; Modified: 2019-06-21
+;;;; Modified: 2019-06-25
 ;;; package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -59,7 +59,7 @@
 
 ;;; auto-compile
 (use-package auto-compile :no-require :defer :ensure
-  :diminish "C"
+  :diminish "AC"
   :hook (emacs-lisp-mode . auto-compile-mode))
 
 
@@ -189,28 +189,16 @@
 
 
 ;;; recentf 関連
-(use-package recentf-ext :no-require :ensure)
-
-;; recentf から除外するファイル
-(set-variable 'recentf-exclude (list "recentf"
-                                     (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))))
-
-;; recentf に保存するファイル数
-(set-variable 'recentf-max-saved-items 1000)
-
-;; *Messages* に不要な出力を行わないようにする
-(defmacro my/with-suppressed-message (&rest body)
-  "Suppress new messages temporarily in the echo area and the `*Messages*' buffer while BODY is evaluated."
-  (declare (indent 0))
-  (let ((message-log-max nil))
-    `(with-temp-message (or (current-message) "") ,@body)))
-
-;; 30秒ごとに recentf を保存
-(run-with-idle-timer 30 t '(lambda ()
-                             (my/with-suppressed-message (recentf-save-list))))
-
-;; recentf を自動クリーンアップしない
-(set-variable 'recentf-auto-cleanup 'never)
+(use-package recentf-ext :no-require :ensure
+  :init (use-package shut-up :ensure)
+  :config
+  (set-variable 'recentf-exclude (list "recentf" ; 除外するファイル
+                                       (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))))
+  (set-variable 'recentf-max-saved-items 1000) ; 保存するファイル数
+  (set-variable 'recentf-auto-cleanup 'never) ; 自動クリーンアップしない
+  (recentf-mode t)
+  (run-with-idle-timer 30 t             ; recentf を自動保存(30秒毎)
+                       '(lambda () (shut-up (recentf-save-list)))))
 
 
 ;;; undo 関連
@@ -431,7 +419,7 @@
 ;;; 括弧
 ;; 括弧にカラフルな色を付ける
 (use-package rainbow-delimiters :no-require :ensure
-  :init (use-package color)
+  :init (require 'color)
   :hook ((prog-mode . rainbow-delimiters-mode)
          (emacs-startup . my/rainbow-delimiters-using-stronger-colors))
   :config
@@ -446,7 +434,6 @@
 
 ;; 自動的に括弧を付ける
 (use-package smartparens :no-require :ensure
-  :init (use-package smartparens-config :no-require)
   :hook (prog-mode . smartparens-mode))
 
 
@@ -501,8 +488,7 @@
       (global-hl-line-unhighlight-all)
       (let ((global-hl-line-mode t))
         (global-hl-line-highlight))))
-  (setq global-hl-line-timer
-        (run-with-idle-timer 0.03 t 'my/global-hl-line-timer-function)))
+  (run-with-idle-timer 0.03 t 'my/global-hl-line-timer-function))
 
 ;; ハイライトで視覚的フィードバック
 (use-package volatile-highlights :ensure
@@ -611,10 +597,10 @@
 (use-package skk :no-require
   :init
   (set-variable 'skk-user-directory "~/Dropbox/Emacs/ddskk/")
-  (use-package skk-study)               ; 変換学習機能
-  (use-package skk-hint)                ; ヒント
-  (use-package context-skk :no-require) ; 自動的にモード切り替え
   (use-package sticky :no-require :ensure) ; skk-sticky-keyに必要
+  (require 'skk-study)                     ; 変換学習機能
+  (require 'skk-hint)                      ; ヒント
+  (require 'context-skk)                   ; 自動的にモード切り替え
 
   :bind
   (("C-S-j"         . ignore)
@@ -754,7 +740,6 @@
    ("C-c w"         . helm-google-suggest)
    ("C-c C-SPC"     . helm-all-mark-rings)
    ("C-M-y"         . helm-show-kill-ring)
-   ("<f2>"          . my/helm-apropos-this)
    :map helm-map
    ("TAB"           . helm-execute-persistent-action)
    ("C-z"           . helm-select-action)
@@ -787,13 +772,7 @@
     "Call helm-ff-run-browse-project with C-u."
     (interactive)
     (setq current-prefix-arg '(4))
-    (call-interactively 'helm-ff-run-browse-project))
-
-  ;; カーソル位置のシンボルで helm-apropos を呼び出す
-  (defun my/helm-apropos-this ()
-    "helm-apropos with this symbol."
-    (interactive)
-    (helm-apropos (thing-at-point 'symbol))))
+    (call-interactively 'helm-ff-run-browse-project)))
 
 
 ;;; helm-elscreen
@@ -873,34 +852,32 @@
 
 
 ;;; Manual
-(use-package helm-elisp :no-require
-  :init (use-package helm-man)
-  :bind
-  ("C-c m"    . helm-man-woman)
-  ("<f3>"     . my/helm-for-document)
-  :config
-  (defvar my/helm-for-document-sources
-    '(helm-source-info-elisp
-      helm-source-info-cl
-      helm-source-info-eieio
-      helm-source-man-pages)
-    "Document sources for my/helm-for-document.")
-
-  ;; man, info, apropos を串刺し検索する
-  (defun my/helm-for-document ()
-    "Preconfigured `helm' for helm-for-document."
-    (interactive)
-    (let ((default (thing-at-point 'symbol)))
-      (helm :sources
-            (nconc
-             (mapcar (lambda (func)
-                       (funcall func default))
-                     helm-apropos-function-list)
-             my/helm-for-document-sources)
-            :buffer "*helm for document*"))))
+(require 'helm-elisp)
+(require 'helm-man)
+(bind-key "C-c m" 'helm-man-woman)
+(bind-key "<f2>" 'my/helm-for-document)
+(defvar my/helm-for-document-sources
+  '(helm-source-info-elisp
+    helm-source-info-cl
+    helm-source-info-eieio
+    helm-source-man-pages)
+  "Document sources for my/helm-for-document.")
+;; man, info, apropos を串刺し検索する
+(defun my/helm-for-document ()
+  "Preconfigured `helm' for helm-for-document."
+  (interactive)
+  (let ((default (thing-at-point 'symbol)))
+    (helm :sources
+          (nconc
+           (mapcar (lambda (func)
+                     (funcall func default))
+                   helm-apropos-function-list)
+           my/helm-for-document-sources)
+          :buffer "*helm for document*")))
 
 
 ;;;; 40_PL.el
+;;; Python
 ;; py-yapf
 (use-package py-yapf :no-require :ensure
   :bind
@@ -911,7 +888,7 @@
 ;; jedi
 (use-package company-jedi :no-require :demand :ensure
   :after company
-  :init (use-package jedi-core)
+  :init (use-package jedi-core :ensure)
   :hook (python-mode . jedi:setup)
   :config
   (set-variable 'jedi:complete-on-dot t)
@@ -1169,7 +1146,7 @@
 
 
 ;;; howm
-(use-package howm :ensure :demand
+(use-package howm :demand :ensure
   :init
   (setq howm-view-title-header "*")
   (setq howm-prefix (kbd "C-x ,"))
