@@ -1,4 +1,4 @@
-;;;; Modified: 2019-10-13
+;;;; Modified: 2019-11-02
 ;;; package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -1325,7 +1325,6 @@
 (bind-key "C-h" (kbd "DEL") key-translation-map) ; C-hでバックスペース
 (bind-key "C-m"            'newline-and-indent) ; 改行時自動インデント
 (bind-key "C-x k"          'kill-this-buffer)   ; バッファを閉じる
-(bind-key "M-k"            'kill-this-buffer)   ; バッファを閉じる
 (bind-key "C-c <C-return>" 'toggle-truncate-lines) ; 右端で折り返す
 (bind-key "C-c TAB"        'indent-region)         ; 範囲インデント
 (bind-key* "C-t"           'other-window) ; 他のウィンドウに移動
